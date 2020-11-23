@@ -18,43 +18,37 @@
   "sprites": [
     { "flip": true,
 	  "angle": 180,
-      "width": 8,
-      "height": 22
+      "width": 8
     },
     { "flip": true,
 	  "angle": 225,
-      "width": 22,
-      "height": 17
+      "width": 22
     },
     { "flip": true,
 	  "angle": 270,
       "width": 32,
-      "height": 12
+	  "height": 14
     },
     { "flip": true,
 	  "angle": 315,
-      "width": 22,
-      "height": 17
+      "width": 22
     },
 	{ "flip": true,
 	  "angle": 0,
-      "width": 8,
-      "height": 22
+      "width": 8
     },
     { "flip": true,
 	  "angle": 45,
-      "width": 22,
-      "height": 17
+      "width": 22
     },
     { "flip": true,
 	  "angle": 90,
       "width": 32,
-      "height": 12
+	  "height": 14
     },
     { "flip": true,
 	  "angle": 135,
-      "width": 22,
-      "height": 17
+      "width": 22
     }    
   ]
 }
