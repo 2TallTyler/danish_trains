@@ -4,3 +4,5 @@ STR_GRF_NAME						:{TITLE} {VERSION}
 STR_GRF_DESC						:Trains from the {ORANGE}Danish State Railways{BLACK}, DSB.{}{}Created by 2TallTyler.
 
 STR_WEBSITE							:https://github.com/2TallTyler/dsb_trains
+
+STR_NAME_MZ_IV						:DSB MZ (IV)

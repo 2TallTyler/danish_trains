@@ -1,0 +1,15 @@
+// Begin Sprite Templates
+
+template template_8_standard(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+    [ x,		y,		8,		22,		-3,			-11]
+    [ x+16,		y,		22,		17,		-14,		-9]
+    [ x+46,		y,		32,		12,		-16,		-8]
+    [ x+86,		y,		22,		17,		-5,			-8]
+    [ x+116,	y,		8,		22,		-3,			-10]
+    [ x+132,	y,		22,		17,		-15,		-9]
+    [ x+162,	y,		32,		12,		-16,		-8]
+    [ x+202,	y,		22,		17,		-11,		-10]
+}
+
+// End Sprite Templates

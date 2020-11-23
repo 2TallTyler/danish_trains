@@ -1,0 +1,60 @@
+{
+  "lighting_angle": 60,
+  "lighting_elevation": 65,
+  "depth_influence": 0,
+  "tiled_normals": false,
+  "soften_edges": 3,
+  "sampler": "square",
+  "accuracy": 5,
+  "brightness": 0,
+  "contrast": 0,
+  "size": {
+    "x": 136,
+    "y": 42,
+    "z": 57
+  },
+  "flip": 1,
+  "render_elevation": 30,
+  "sprites": [
+    { "flip": true,
+	  "angle": 180,
+      "width": 8,
+      "height": 22
+    },
+    { "flip": true,
+	  "angle": 225,
+      "width": 22,
+      "height": 17
+    },
+    { "flip": true,
+	  "angle": 270,
+      "width": 32,
+      "height": 12
+    },
+    { "flip": true,
+	  "angle": 315,
+      "width": 22,
+      "height": 17
+    },
+	{ "flip": true,
+	  "angle": 0,
+      "width": 8,
+      "height": 22
+    },
+    { "flip": true,
+	  "angle": 45,
+      "width": 22,
+      "height": 17
+    },
+    { "flip": true,
+	  "angle": 90,
+      "width": 32,
+      "height": 12
+    },
+    { "flip": true,
+	  "angle": 135,
+      "width": 22,
+      "height": 17
+    }    
+  ]
+}
