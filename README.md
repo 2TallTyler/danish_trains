@@ -1,2 +1,4 @@
 # DSB Trains
-A commissioned project to create trains from the Danish DSB in OpenTTD.
+Trains from the Danish State Railways, DSB. 
+
+Commissioned by DenLillePrins on Discord and in development.
