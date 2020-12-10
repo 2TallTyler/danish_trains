@@ -2,14 +2,22 @@
 
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
     [ x,		y,		8,		22,		-3,			-12]
-    [ x+16,		y,		22,		19,		-13,		-13]
+    [ x+16,		y,		22,		19,		-15,		-11]
     [ x+46,		y,		32,		14,		-16,		-10]
-    [ x+86,		y,		22,		19,		-5,			-12]
+    [ x+86,		y,		22,		19,		-5,			-11]
     [ x+116,	y,		8,		22,		-3,			-12]
-    [ x+132,	y,		22,		19,		-15,		-12]
+    [ x+132,	y,		22,		19,		-15,		-11]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		19,		-8,			-13]
+    [ x+202,	y,		22,		19,		-5,			-10]
 }
 
+template template_buy_8_standard(x,y) {
+	//left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+162,	y,		32,		14,		-15,		-7]
+}
 // End Sprite Templates

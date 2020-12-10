@@ -10,4 +10,19 @@ grf {
 	url: string(STR_WEBSITE);
 }
 
+/*
+Base costs are tweaked to balance vehicle purchase and running costs using a strategy developed by Andythenorth in his excellent Iron Horse 2 train set. 
+This requires changing base costs to give greater range and control, and allow me to borrow values directly from the Iron Horse code reference. Thanks, Andy! :)
+
+Note that all engines use RUNNING_COST_STEAM and all wagons use RUNNING_COST_DIESEL. 
+Unlike other base cost overrides, changing vehicle base costs only affects vehicles within that NewGRF, so other vehicle sets will not be affected.
+*/
+
+basecost {
+	PR_BUILD_VEHICLE_TRAIN: -2;
+	PR_BUILD_VEHICLE_WAGON: 1;
+	PR_RUNNING_TRAIN_STEAM: -2;
+	PR_RUNNING_TRAIN_DIESEL: -4;
+}
+
 /* *** End Header *** */

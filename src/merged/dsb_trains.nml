@@ -10,27 +10,54 @@ grf {
 	url: string(STR_WEBSITE);
 }
 
+/*
+Base costs are tweaked to balance vehicle purchase and running costs using a strategy developed by Andythenorth in his excellent Iron Horse 2 train set. 
+This requires changing base costs to give greater range and control, and allow me to borrow values directly from the Iron Horse code reference. Thanks, Andy! :)
+
+Note that all engines use RUNNING_COST_STEAM and all wagons use RUNNING_COST_DIESEL. 
+Unlike other base cost overrides, changing vehicle base costs only affects vehicles within that NewGRF, so other vehicle sets will not be affected.
+*/
+
+basecost {
+	PR_BUILD_VEHICLE_TRAIN: -2;
+	PR_BUILD_VEHICLE_WAGON: 1;
+	PR_RUNNING_TRAIN_STEAM: -2;
+	PR_RUNNING_TRAIN_DIESEL: -4;
+}
+
 /* *** End Header *** */
 
 // Begin Sprite Templates
 
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
     [ x,		y,		8,		22,		-3,			-12]
-    [ x+16,		y,		22,		19,		-13,		-13]
+    [ x+16,		y,		22,		19,		-15,		-11]
     [ x+46,		y,		32,		14,		-16,		-10]
-    [ x+86,		y,		22,		19,		-5,			-12]
+    [ x+86,		y,		22,		19,		-5,			-11]
     [ x+116,	y,		8,		22,		-3,			-12]
-    [ x+132,	y,		22,		19,		-15,		-12]
+    [ x+132,	y,		22,		19,		-15,		-11]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		19,		-8,			-13]
+    [ x+202,	y,		22,		19,		-5,			-10]
 }
 
+template template_buy_8_standard(x,y) {
+	//left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+162,	y,		32,		14,		-15,		-7]
+}
 // End Sprite Templates
-// MZ (IV)
+/* Begin MZ (IV) */
 
 spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {
     template_8_standard(0,0)
+}
+
+spriteset(spriteset_mz_iv_buy, "src\gfx\mz_iv_8bpp.png") {
+    template_buy_8_standard(0,0)
 }
 
 spritegroup spritegroup_mz_iv {
@@ -44,18 +71,15 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		name: string(STR_NAME_MZ_IV);
 		climates_available: ALL_CLIMATES;
 		introduction_date: date(1977,01,01);
-		model_life:	34; // retired in 2008
-		vehicle_life: 20;
-		reliability_decay: 15;
-		cost_factor: 65;
-		running_cost_factor: 60;
-		
-		/* Road vehicle-specific porperties */
+		model_life:	40; // retired in 2008
+		vehicle_life: 40;
+		reliability_decay: 20;
+		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 103 mph;
 		track_type:	RAIL;
 		power: 3845 hp;
-		running_cost_base: RUNNING_COST_DIESEL;
+		running_cost_base: RUNNING_COST_STEAM;
 		engine_class: ENGINE_CLASS_DIESEL;
 		power: 3845 hp;
 		weight: 123 ton;
@@ -64,5 +88,11 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 	}
 	graphics {
 		default: spritegroup_mz_iv;
+		purchase: spriteset_mz_iv_buy;
+		cost_factor: 139;
+		running_cost_factor: 5318;
+		additional_text: string(STR_ROLE_GP_EXPRESS);
 	}
 }
+
+/* End MZ (IV) */

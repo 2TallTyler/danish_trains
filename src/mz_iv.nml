@@ -1,7 +1,11 @@
-// MZ (IV)
+/* Begin MZ (IV) */
 
 spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {
     template_8_standard(0,0)
+}
+
+spriteset(spriteset_mz_iv_buy, "src\gfx\mz_iv_8bpp.png") {
+    template_buy_8_standard(0,0)
 }
 
 spritegroup spritegroup_mz_iv {
@@ -15,18 +19,15 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		name: string(STR_NAME_MZ_IV);
 		climates_available: ALL_CLIMATES;
 		introduction_date: date(1977,01,01);
-		model_life:	34; // retired in 2008
-		vehicle_life: 20;
-		reliability_decay: 15;
-		cost_factor: 65;
-		running_cost_factor: 60;
-		
-		/* Road vehicle-specific porperties */
+		model_life:	40; // retired in 2008
+		vehicle_life: 40;
+		reliability_decay: 20;
+		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 103 mph;
 		track_type:	RAIL;
 		power: 3845 hp;
-		running_cost_base: RUNNING_COST_DIESEL;
+		running_cost_base: RUNNING_COST_STEAM;
 		engine_class: ENGINE_CLASS_DIESEL;
 		power: 3845 hp;
 		weight: 123 ton;
@@ -35,5 +36,11 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 	}
 	graphics {
 		default: spritegroup_mz_iv;
+		purchase: spriteset_mz_iv_buy;
+		cost_factor: 139;
+		running_cost_factor: 5318;
+		additional_text: string(STR_ROLE_GP_EXPRESS);
 	}
 }
+
+/* End MZ (IV) */
