@@ -1,13 +1,14 @@
 {
   "lighting_angle": 60,
-  "lighting_elevation": 65,
+  "lighting_elevation": 50,
   "depth_influence": 0,
   "tiled_normals": false,
   "soften_edges": 3,
   "sampler": "square",
   "accuracy": 5,
-  "brightness": 0,
-  "contrast": 0,
+  "brightness": -0.05,
+  "contrast": 0.2,
+  "overlap": -0.2,
   "size": {
     "x": 136,
     "y": 42,
