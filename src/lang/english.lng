@@ -5,10 +5,6 @@ STR_GRF_DESC						:Trains from the {ORANGE}Danish State Railways{BLACK}, DSB.{}{
 
 STR_WEBSITE							:https://github.com/2TallTyler/dsb_trains
 
-
-STR_ROLE_GP_EXPRESS					:Role: {GOLD}General Purpose / Express
-
-
-STR_NAME_MZ_IV						:DSB MZ (IV)
+STR_NAME_MZ_IV						:Nohab MZ (IV)
 
 

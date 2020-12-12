@@ -91,7 +91,6 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		purchase: spriteset_mz_iv_buy;
 		cost_factor: 139;
 		running_cost_factor: 5318;
-		additional_text: string(STR_ROLE_GP_EXPRESS);
 	}
 }
 
