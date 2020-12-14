@@ -11,7 +11,7 @@ template template_8_standard(x, y) {
     [ x+116,	y,		8,		22,		-3,			-12]
     [ x+132,	y,		22,		19,		-15,		-11]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		19,		-5,			-10]
+    [ x+202,	y,		22,		19,		-5,			-11]
 }
 
 template template_buy_8_standard(x,y) {

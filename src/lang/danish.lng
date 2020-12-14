@@ -1,0 +1,8 @@
+##grflangid 0x2D
+
+STR_GRF_NAME						:{TITLE} {VERSION}
+STR_GRF_DESC						:Tog fra den {ORANGE}Danske Statsbaner{BLACK}, DSB.{}{}Lavet af 2TallTyler.
+
+STR_WEBSITE							:https://github.com/2TallTyler/dsb_trains
+
+STR_NAME_MZ_IV						:DSB Litra MZ (IV)

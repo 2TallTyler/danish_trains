@@ -1,2 +1,2 @@
-VERSION			:Pre-Alpha
+VERSION			:0.1.0
 TITLE			:DSB Trains

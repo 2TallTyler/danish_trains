@@ -1,17 +1,19 @@
 /* Begin MZ (IV) */
 
-spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {
-    template_8_standard(0,0)
-}
+switch (FEAT_TRAINS, SELF, switch_cc_mz_iv, param_company_colours == 1)
+	{1: spriteset_mz_iv_cc; spriteset_mz_iv;}
+	
+switch (FEAT_TRAINS, SELF, switch_cc_mz_iv_buy, param_company_colours == 1)
+	{1: spriteset_mz_iv_cc_buy; spriteset_mz_iv_buy;}
+	
 
-spriteset(spriteset_mz_iv_buy, "src\gfx\mz_iv_8bpp.png") {
-    template_buy_8_standard(0,0)
-}
+/* Real livery sprites */
+spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_iv_buy, "src\gfx\mz_iv_8bpp.png") {template_buy_8_standard(0,0)}
 
-spritegroup spritegroup_mz_iv {
-	loaded:	[spriteset_mz_iv];
-	loading: [spriteset_mz_iv];
-}
+/* CC sprites */
+spriteset(spriteset_mz_iv_cc, "src\gfx\mz_iv_cc_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_iv_cc_buy, "src\gfx\mz_iv_cc_8bpp.png") {template_buy_8_standard(0,0)}
 
 item(FEAT_TRAINS, item_mz_iv, 0) {
 	property {
@@ -35,8 +37,8 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		length: 8;
 	}
 	graphics {
-		default: spritegroup_mz_iv;
-		purchase: spriteset_mz_iv_buy;
+		default: switch_cc_mz_iv;
+		purchase: switch_cc_mz_iv_buy;
 		cost_factor: 139;
 		running_cost_factor: 5318;
 	}

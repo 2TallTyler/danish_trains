@@ -5,6 +5,8 @@ STR_GRF_DESC						:Trains from the {ORANGE}Danish State Railways{BLACK}, DSB.{}{
 
 STR_WEBSITE							:https://github.com/2TallTyler/dsb_trains
 
-STR_NAME_MZ_IV						:Nohab MZ (IV)
+STR_PARAM_NAME_CCOLOUR				:Company Colours
+STR_PARAM_DESC_CCOLOUR				:Use Company Colours instead of real liveries.
 
+STR_NAME_MZ_IV						:DSB Class MZ (IV)
 

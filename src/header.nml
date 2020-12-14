@@ -8,6 +8,15 @@ grf {
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
+	
+	param 0 {
+		param_company_colours {
+			name: string(STR_PARAM_NAME_CCOLOUR);
+			desc: string(STR_PARAM_DESC_CCOLOUR);
+			type: bool;
+			def_value: 0;
+		}
+	}
 }
 
 /*
