@@ -1,12 +1,14 @@
 ##grflangid 0x01
 
 STR_GRF_NAME						:{TITLE} {VERSION}
-STR_GRF_DESC						:Trains from the {ORANGE}Danish State Railways{BLACK}, DSB.{}{}Created by 2TallTyler.
+STR_GRF_DESC						:{ORANGE}DSB Trains{BLACK} from the Danish State Railways.{}{}In development and incomplete.{}{}{ORANGE}Visit website for train list.{}{}{BLACK}Created by 2TallTyler.
 
 STR_WEBSITE							:https://github.com/2TallTyler/dsb_trains
 
-STR_PARAM_NAME_CCOLOUR				:Company Colours
-STR_PARAM_DESC_CCOLOUR				:Use Company Colours instead of real liveries.
+STR_PARAM_NAME_CCOLOUR				:Liveries
+STR_PARAM_DESC_CCOLOUR				:Select whether trains use their real-world colours or the OpenTTD company colour.
+PARAM_CCOLOUR_REALISTIC				:Realistic
+PARAM_CCOLOUR_CC					:Company Colours
 
-STR_NAME_MZ_IV						:DSB Class MZ (IV)
+STR_NAME_MZ_IV						:DSB Class MZ (IV) (Diesel)
 

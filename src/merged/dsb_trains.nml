@@ -13,8 +13,13 @@ grf {
 		param_company_colours {
 			name: string(STR_PARAM_NAME_CCOLOUR);
 			desc: string(STR_PARAM_DESC_CCOLOUR);
-			type: bool;
+			min_value: 0;
+			max_value: 1;
 			def_value: 0;
+			names: {
+				0: string(PARAM_CCOLOUR_REALISTIC);
+				1: string(PARAM_CCOLOUR_CC);
+			};
 		}
 	}
 }
@@ -36,45 +41,42 @@ basecost {
 
 /* *** End Header *** */
 
-// Begin Sprite Templates
+
+/* Begin Sprite Templates */
+
+/* Fix depot view */
+traininfo_y_offset = 2;
+train_width_32_px = 1;
+
 
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
 	//							more negative to shift left
 	//											more negative to shift up
-    [ x,		y,		8,		22,		-3,			-12]
-    [ x+16,		y,		22,		19,		-15,		-11]
+    [ x,		y,		8,		24,		-3,			-12]
+    [ x+16,		y,		22,		21,		-15,		-11]
     [ x+46,		y,		32,		14,		-16,		-10]
-    [ x+86,		y,		22,		19,		-5,			-11]
-    [ x+116,	y,		8,		22,		-3,			-12]
-    [ x+132,	y,		22,		19,		-15,		-11]
+    [ x+86,		y,		22,		21,		-5,			-11]
+    [ x+116,	y,		8,		24,		-3,			-12]
+    [ x+132,	y,		22,		21,		-15,		-11]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		19,		-5,			-11]
+    [ x+202,	y,		22,		21,		-5,			-11]
 }
 
-template template_buy_8_standard(x,y) {
-	//left_x, upper_y, width, height, offset_x, offset_y
-	//							more negative to shift left
-	//											more negative to shift up
-    [ x+162,	y,		32,		14,		-15,		-7]
-}
-// End Sprite Templates
+/* End Sprite Templates */
+
+
 /* Begin MZ (IV) */
 
+/* Use real liveries or company colours? (set by parameter) */
 switch (FEAT_TRAINS, SELF, switch_cc_mz_iv, param_company_colours == 1)
-	{1: spriteset_mz_iv_cc; spriteset_mz_iv;}
-	
-switch (FEAT_TRAINS, SELF, switch_cc_mz_iv_buy, param_company_colours == 1)
-	{1: spriteset_mz_iv_cc_buy; spriteset_mz_iv_buy;}
-	
+	{1: spriteset_mz_iv_cc; spriteset_mz_iv;}	
 
 /* Real livery sprites */
 spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {template_8_standard(0,0)}
-spriteset(spriteset_mz_iv_buy, "src\gfx\mz_iv_8bpp.png") {template_buy_8_standard(0,0)}
 
 /* CC sprites */
 spriteset(spriteset_mz_iv_cc, "src\gfx\mz_iv_cc_8bpp.png") {template_8_standard(0,0)}
-spriteset(spriteset_mz_iv_cc_buy, "src\gfx\mz_iv_cc_8bpp.png") {template_buy_8_standard(0,0)}
 
 item(FEAT_TRAINS, item_mz_iv, 0) {
 	property {
@@ -99,7 +101,6 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 	}
 	graphics {
 		default: switch_cc_mz_iv;
-		purchase: switch_cc_mz_iv_buy;
 		cost_factor: 139;
 		running_cost_factor: 5318;
 	}

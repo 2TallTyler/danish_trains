@@ -13,8 +13,13 @@ grf {
 		param_company_colours {
 			name: string(STR_PARAM_NAME_CCOLOUR);
 			desc: string(STR_PARAM_DESC_CCOLOUR);
-			type: bool;
+			min_value: 0;
+			max_value: 1;
 			def_value: 0;
+			names: {
+				0: string(PARAM_CCOLOUR_REALISTIC);
+				1: string(PARAM_CCOLOUR_CC);
+			};
 		}
 	}
 }

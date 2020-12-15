@@ -1,23 +1,23 @@
-// Begin Sprite Templates
+
+/* Begin Sprite Templates */
+
+/* Fix depot view */
+traininfo_y_offset = 2;
+train_width_32_px = 1;
+
 
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
 	//							more negative to shift left
 	//											more negative to shift up
-    [ x,		y,		8,		22,		-3,			-12]
-    [ x+16,		y,		22,		19,		-15,		-11]
+    [ x,		y,		8,		24,		-3,			-12]
+    [ x+16,		y,		22,		21,		-15,		-11]
     [ x+46,		y,		32,		14,		-16,		-10]
-    [ x+86,		y,		22,		19,		-5,			-11]
-    [ x+116,	y,		8,		22,		-3,			-12]
-    [ x+132,	y,		22,		19,		-15,		-11]
+    [ x+86,		y,		22,		21,		-5,			-11]
+    [ x+116,	y,		8,		24,		-3,			-12]
+    [ x+132,	y,		22,		21,		-15,		-11]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		19,		-5,			-11]
+    [ x+202,	y,		22,		21,		-5,			-11]
 }
 
-template template_buy_8_standard(x,y) {
-	//left_x, upper_y, width, height, offset_x, offset_y
-	//							more negative to shift left
-	//											more negative to shift up
-    [ x+162,	y,		32,		14,		-15,		-7]
-}
-// End Sprite Templates
+/* End Sprite Templates */
