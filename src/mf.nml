@@ -4,8 +4,12 @@
 /* GRAPHICS */
 
 spriteset(spriteset_mf_1_front, "src\gfx\mf_1_front_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_front_rev, "src\gfx\mf_1_front_8bpp.png") {template_8_reversed(0,0)}
+
 spriteset(spriteset_mf_1_middle, "src\gfx\mf_1_middle_8bpp.png") {template_8_standard(0,0)}
+
 spriteset(spriteset_mf_1_rear, "src\gfx\mf_1_rear_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_rear_reversed, "src\gfx\mf_1_rear_8bpp.png") {template_8_reversed(0,0)}
 
 spriteset(spriteset_mf_headlights, "src\gfx\mf_headlights.png") {template_8_standard(0,0)}
 spriteset(spriteset_mf_marker_lights, "src\gfx\mf_marker_lights.png") {template_8_standard(0,0)}
@@ -13,20 +17,59 @@ spriteset(spriteset_mf_marker_lights, "src\gfx\mf_marker_lights.png") {template_
 
 /* SWITCHES */
 
+/* Sprite stacks */
+
+switch (FEAT_TRAINS, SELF, sw_mf_1_front_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_mf_1_front;    // Return the base sprite
+    1: return spriteset_mf_headlights;    // Return the overlay
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_1_front_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_mf_1_front_rev;    // Return the base sprite
+    1: return spriteset_mf_marker_lights;    // Return the overlay
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_1_rear_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_mf_1_rear_reversed;    // Return the base sprite
+    1: return spriteset_mf_headlights;    // Return the overlay
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_1_rear_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_mf_1_rear;    // Return the base sprite
+    1: return spriteset_mf_marker_lights;    // Return the overlay
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_1_front_graphics, position_in_consist) {
+	0: return sw_mf_1_front_with_headlights;
+	return spriteset_mf_1_front;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_1_rear_graphics, position_in_consist_from_end) {
+	0: return sw_mf_1_rear_with_marker_lights;
+	return spriteset_mf_1_rear;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_graphics, position_in_articulated_veh) {
+	0: sw_mf_1_front_graphics;
+	1: spriteset_mf_1_middle;
+	2: sw_mf_1_rear_graphics;
+}
+
 switch (FEAT_TRAINS, SELF, sw_mf_articulated_part, extra_callback_info1) {
 	1 .. 2: return item_mf;
 	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
-}
-
-/*switch (FEAT_TRAINS, SELF, sw_mf_1_front_graphics, getbits(extra_callback_info1, 8, 8)) {
-	0: spriteset_mf_1_front, STORE_TEMP(CB_FLAG_MORE_SPRITES | PALETTE_USE_DEFAULT, 0x100);
-	1: spriteset_mf_headlights, STORE_TEMP(PALETTE_USE_DEFAULT, 0x100);
-}*/
-
-switch (FEAT_TRAINS, SELF, sw_mf_graphics, position_in_articulated_veh) {
-	0: spriteset_mf_1_front;
-	1: spriteset_mf_1_middle;
-	2: spriteset_mf_1_rear;
 }
 
 /* ITEM*/

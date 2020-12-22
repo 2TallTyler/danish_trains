@@ -6,7 +6,6 @@ traininfo_y_offset = 2;
 train_width_32_px = 1;
 
 /* Recolour switches for realistic or company colours */
-
 switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
 	0: return palette_2cc(COLOUR_RED, COLOUR_RED);
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
@@ -16,7 +15,6 @@ switch (FEAT_TRAINS, SELF, sw_cc_blue, param_company_colours) {
 	0: return palette_2cc(COLOUR_DARK_BLUE, COLOUR_PALE_GREEN);
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
-
 
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
@@ -30,6 +28,20 @@ template template_8_standard(x, y) {
     [ x+132,	y,		22,		21,		-15,		-11]
     [ x+162,	y,		32,		14,		-16,		-10]
     [ x+202,	y,		22,		21,		-5,			-11]
+}
+
+template template_8_reversed(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+	//							more negative to shift left
+	//											more negative to shift up
+    [ x+116,	y,		8,		24,		-3,			-12]
+    [ x+132,	y,		22,		21,		-15,		-11]
+    [ x+162,	y,		32,		14,		-16,		-10]
+    [ x+202,	y,		22,		21,		-5,			-11]
+	[ x,		y,		8,		24,		-3,			-12]
+    [ x+16,		y,		22,		21,		-15,		-11]
+    [ x+46,		y,		32,		14,		-16,		-10]
+    [ x+86,		y,		22,		21,		-5,			-11]
 }
 
 /* End Sprite Templates */
