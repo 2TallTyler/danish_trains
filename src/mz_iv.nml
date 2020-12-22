@@ -1,15 +1,8 @@
 
 /* Begin MZ (IV) */
 
-/* Use real liveries or company colours? (set by parameter) */
-switch (FEAT_TRAINS, SELF, switch_cc_mz_iv, param_company_colours == 1)
-	{1: spriteset_mz_iv_cc; spriteset_mz_iv;}	
-
 /* Real livery sprites */
 spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {template_8_standard(0,0)}
-
-/* CC sprites */
-spriteset(spriteset_mz_iv_cc, "src\gfx\mz_iv_cc_8bpp.png") {template_8_standard(0,0)}
 
 item(FEAT_TRAINS, item_mz_iv, 0) {
 	property {
@@ -32,7 +25,8 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		length: 8;
 	}
 	graphics {
-		default: switch_cc_mz_iv;
+		default: spriteset_mz_iv;
+		colour_mapping: sw_cc_red;
 		cost_factor: 139;
 		running_cost_factor: 5318;
 	}
