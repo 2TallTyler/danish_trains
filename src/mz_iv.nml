@@ -24,7 +24,6 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 103 mph;
 		track_type:	RAIL;
-		power: 3845 hp;
 		running_cost_base: RUNNING_COST_STEAM;
 		engine_class: ENGINE_CLASS_DIESEL;
 		power: 3845 hp;

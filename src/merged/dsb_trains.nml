@@ -4,7 +4,7 @@ grf {
 	grfid: "TT14";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESC);
-	version: 0;
+	version: 1;
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
@@ -22,6 +22,14 @@ grf {
 			};
 		}
 	}
+}
+
+railtypetable {
+	RAIL, ELRL
+}
+
+cargotable {
+	PASS
 }
 
 /*
@@ -48,6 +56,18 @@ basecost {
 traininfo_y_offset = 2;
 train_width_32_px = 1;
 
+/* Recolour switches for realistic or company colours */
+
+switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
+	0: return palette_2cc(COLOUR_RED, COLOUR_RED);
+	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
+}
+
+switch (FEAT_TRAINS, SELF, sw_cc_blue, param_company_colours) {
+	0: return palette_2cc(COLOUR_DARK_BLUE, COLOUR_PALE_GREEN);
+	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
+}
+
 
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
@@ -64,6 +84,80 @@ template template_8_standard(x, y) {
 }
 
 /* End Sprite Templates */
+
+
+/* Begin MF */
+
+/* GRAPHICS */
+
+spriteset(spriteset_mf_1_front, "src\gfx\mf_1_front_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_middle, "src\gfx\mf_1_middle_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_rear, "src\gfx\mf_1_rear_8bpp.png") {template_8_standard(0,0)}
+
+spriteset(spriteset_mf_headlights, "src\gfx\mf_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_marker_lights, "src\gfx\mf_marker_lights.png") {template_8_standard(0,0)}
+
+
+/* SWITCHES */
+
+switch (FEAT_TRAINS, SELF, sw_mf_articulated_part, extra_callback_info1) {
+	1 .. 2: return item_mf;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+/*switch (FEAT_TRAINS, SELF, sw_mf_1_front_graphics, getbits(extra_callback_info1, 8, 8)) {
+	0: spriteset_mf_1_front, STORE_TEMP(CB_FLAG_MORE_SPRITES | PALETTE_USE_DEFAULT, 0x100);
+	1: spriteset_mf_headlights, STORE_TEMP(PALETTE_USE_DEFAULT, 0x100);
+}*/
+
+switch (FEAT_TRAINS, SELF, sw_mf_graphics, position_in_articulated_veh) {
+	0: spriteset_mf_1_front;
+	1: spriteset_mf_1_middle;
+	2: spriteset_mf_1_rear;
+}
+
+/* ITEM*/
+
+item(FEAT_TRAINS, item_mf, 1) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MF);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1989,01,01);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 50;
+		loading_speed: 6;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 180 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_SPRITE_STACK);
+		refit_cost: 0;
+		track_type:	RAIL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_DIESEL;
+		power: 1600 hp;
+		weight: 97 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_mf_graphics;
+		colour_mapping: sw_cc_red;
+		articulated_part: sw_mf_articulated_part;
+		cargo_capacity: return (position_in_articulated_veh == 1) ? 64 : 38;
+		purchase_cargo_capacity: 140 / 3;
+		cost_factor: 90;
+		running_cost_factor: 1800;
+		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
+	}
+}
+
+/* End MF */
 
 
 /* Begin MZ (IV) */
@@ -91,7 +185,6 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 103 mph;
 		track_type:	RAIL;
-		power: 3845 hp;
 		running_cost_base: RUNNING_COST_STEAM;
 		engine_class: ENGINE_CLASS_DIESEL;
 		power: 3845 hp;

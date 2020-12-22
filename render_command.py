@@ -3,7 +3,7 @@
 #################################
 
 # Name of NewGRF, as it appears in file names
-vehicle_name = "train"
+vehicle_name = "mf_1_rear"
 
 vehicle_manifest = "8_standard"
 
