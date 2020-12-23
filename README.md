@@ -1,12 +1,15 @@
 # DSB Trains
 
-![DSB Class MZ (IV)](/docs/0-1-0.png)
+![DSB Trains roster](/docs/0-2-0.png)
 
 Trains from the Danish State Railways, DSB. 
 
 This is a work in progress NewGRF commissioned by DenLillePrins on Discord. As such, it is currently incomplete.
 
 ## Complete
+#### EMU / DMU
+- [Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5), 3-car version (1989)
+
 #### Locomotives
 - [Class MZ (IV)](https://www.jernbanen.dk/motor.php?s=8&litra=MZ&typenr=4) (IV) (1977)
 
@@ -17,10 +20,10 @@ This is a work in progress NewGRF commissioned by DenLillePrins on Discord. As s
 - [Third generation](https://www.jernbanen.dk/s-tog.php?typenr=53) (1986)
 - [Fourth generation](https://www.jernbanen.dk/s-tog.php?typenr=54) (1996)
 
-#### EMU/DMU
+#### EMU / DMU
 - [Class MA](https://www.jernbanen.dk/lyntog.php?typenr=3) (1963)
 - [Class MR](https://www.jernbanen.dk/lyntog.php?typenr=9) (1978)
-- [Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5) in both 2 and 3-car versions (1989 and 1993)
+- [Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5), 2-car version (1993)
 - [Class ER](https://www.jernbanen.dk/lyntog.php?typenr=6) (1993)
 - [Class ET](https://www.jernbanen.dk/lyntog.php?typenr=7) (2000)
 
