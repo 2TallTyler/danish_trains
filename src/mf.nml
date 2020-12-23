@@ -7,109 +7,174 @@
 
 /* GRAPHICS */
 
-spriteset(spriteset_mf_1_mfa, "src\gfx\mf_1_mfa_8bpp.png") {template_8_standard(0,0)}
-spriteset(spriteset_mf_1_mfa_reversed, "src\gfx\mf_1_mfa_8bpp.png") {template_8_reversed(0,0)}
-
-spriteset(spriteset_mf_1_ff, "src\gfx\mf_1_ff_8bpp.png") {template_8_standard(0,0)}
-spriteset(spriteset_mf_1_ff_reversed, "src\gfx\mf_1_ff_8bpp.png") {template_8_reversed(0,0)}
-
-spriteset(spriteset_mf_1_mfb, "src\gfx\mf_1_mfb_8bpp.png") {template_8_standard(0,0)}
-spriteset(spriteset_mf_1_mfb_reversed, "src\gfx\mf_1_mfb_8bpp.png") {template_8_reversed(0,0)}
-
+/* Lights */
 spriteset(spriteset_mf_headlights, "src\gfx\mf_headlights.png") {template_8_standard(0,0)}
 spriteset(spriteset_mf_marker_lights, "src\gfx\mf_marker_lights.png") {template_8_standard(0,0)}
 
+/* White and red */
+spriteset(spriteset_mf_1_mfa, "src\gfx\mf_1_mfa_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_mfa_reversed, "src\gfx\mf_1_mfa_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_mf_1_ff, "src\gfx\mf_1_ff_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_ff_reversed, "src\gfx\mf_1_ff_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_mf_1_mfb, "src\gfx\mf_1_mfb_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_1_mfb_reversed, "src\gfx\mf_1_mfb_8bpp.png") {template_8_reversed(0,0)}
+
+/* Grey and blue */
+spriteset(spriteset_mf_2_mfa, "src\gfx\mf_2_mfa_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_2_mfa_reversed, "src\gfx\mf_2_mfa_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_mf_2_ff, "src\gfx\mf_2_ff_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_2_ff_reversed, "src\gfx\mf_2_ff_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_mf_2_mfb, "src\gfx\mf_2_mfb_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_2_mfb_reversed, "src\gfx\mf_2_mfb_8bpp.png") {template_8_reversed(0,0)}
+
+/* Red and black */
+spriteset(spriteset_mf_3_mfa, "src\gfx\mf_3_mfa_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_3_mfa_reversed, "src\gfx\mf_3_mfa_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_mf_3_ff, "src\gfx\mf_3_ff_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_3_ff_reversed, "src\gfx\mf_3_ff_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_mf_3_mfb, "src\gfx\mf_3_mfb_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mf_3_mfb_reversed, "src\gfx\mf_3_mfb_8bpp.png") {template_8_reversed(0,0)}
+
 /* SWITCHES */
 
+/* Livery selection for MFA */
+switch (FEAT_TRAINS, SELF, sw_mf_livery_mfa, cargo_subtype) {
+	0: spriteset_mf_1_mfa;
+	1: spriteset_mf_2_mfa;
+	2: spriteset_mf_3_mfa;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_livery_mfa_reversed, cargo_subtype) {
+	0: spriteset_mf_1_mfa_reversed;
+	1: spriteset_mf_2_mfa_reversed;
+	2: spriteset_mf_3_mfa_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_livery_ff, cargo_subtype) {
+	0: spriteset_mf_1_ff;
+	1: spriteset_mf_2_ff;
+	2: spriteset_mf_3_ff;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_livery_ff_reversed, cargo_subtype) {
+	0: spriteset_mf_1_ff_reversed;
+	1: spriteset_mf_2_ff_reversed;
+	2: spriteset_mf_3_ff_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_livery_mfb, cargo_subtype) {
+	0: spriteset_mf_1_mfb;
+	1: spriteset_mf_2_mfb;
+	2: spriteset_mf_3_mfb;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mf_livery_mfb_reversed, cargo_subtype) {
+	0: spriteset_mf_1_mfb_reversed;
+	1: spriteset_mf_2_mfb_reversed;
+	2: spriteset_mf_3_mfb_reversed;
+}
+
+/* Livery selection for FF */
+
+/* Livery selection for MFB */
+
+
 /* First car of vehicle is an MFA. If it is the first car of the train, display headlights.  */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfa_with_headlights, [
+switch (FEAT_TRAINS, SELF, sw_mf_mfa_with_headlights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
     ]) {
-    0: return spriteset_mf_1_mfa;    // Return the base sprite
+    0: return sw_mf_livery_mfa;    // Return the base sprite
     1: return spriteset_mf_headlights;    // Return the overlay
 }
 
 /* First car of vehicle is an MFA. If it is the first car of the train, display headlights.  */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfa_position, position_in_consist) {
-	0: return sw_mf_1_mfa_with_headlights;
-	return spriteset_mf_1_mfa;
+switch (FEAT_TRAINS, SELF, sw_mf_mfa_position, position_in_consist) {
+	0: return sw_mf_mfa_with_headlights;
+	return sw_mf_livery_mfa;
 }
 
 /* Sprite stack for MFA with marker lights */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfa_with_marker_lights, [
+switch (FEAT_TRAINS, SELF, sw_mf_mfa_with_marker_lights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
     ]) {
-    0: return spriteset_mf_1_mfa_reversed;    // Return the base sprite
+    0: return sw_mf_livery_mfa_reversed;    // Return the base sprite
     1: return spriteset_mf_marker_lights;    // Return the overlay
 }
 
 /* Last car of vehicle is an MFA. If it is the last car of the train, display marker lights.  */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfa_reversed_position, position_in_consist_from_end) {
-	0: return sw_mf_1_mfa_with_marker_lights;
-	return spriteset_mf_1_mfa_reversed;
+switch (FEAT_TRAINS, SELF, sw_mf_mfa_reversed_position, position_in_consist_from_end) {
+	0: return sw_mf_mfa_with_marker_lights;
+	return sw_mf_livery_mfa_reversed;
 }
 
 /* Sprite stack for MFB with headlights */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfb_with_headlights, [
+switch (FEAT_TRAINS, SELF, sw_mf_mfb_with_headlights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
     ]) {
-    0: return spriteset_mf_1_mfb_reversed;    // Return the base sprite
+    0: return sw_mf_livery_mfb_reversed;    // Return the base sprite
     1: return spriteset_mf_headlights;    // Return the overlay
 }
 
 /* First car of vehicle is an MFB. If it is the first car of the train, display headlights.  */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfb_reversed_position, position_in_consist) {
-	0: return sw_mf_1_mfb_with_headlights;
-	return spriteset_mf_1_mfb_reversed;
+switch (FEAT_TRAINS, SELF, sw_mf_mfb_reversed_position, position_in_consist) {
+	0: return sw_mf_mfb_with_headlights;
+	return sw_mf_livery_mfb_reversed;
 }
 
 /* Sprite stack for MFB with marker lights */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfb_with_marker_lights, [
+switch (FEAT_TRAINS, SELF, sw_mf_mfb_with_marker_lights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
     ]) {
-    0: return spriteset_mf_1_mfb;    // Return the base sprite
+    0: return sw_mf_livery_mfb;    // Return the base sprite
     1: return spriteset_mf_marker_lights;    // Return the overlay
 }
 
 /* Last car of vehicle is an MFB. If it is the last car of the train, display marker lights.  */
-switch (FEAT_TRAINS, SELF, sw_mf_1_mfb_position, position_in_consist_from_end) {
-	0: return sw_mf_1_mfb_with_marker_lights;
-	return spriteset_mf_1_mfb;
+switch (FEAT_TRAINS, SELF, sw_mf_mfb_position, position_in_consist_from_end) {
+	0: return sw_mf_mfb_with_marker_lights;
+	return sw_mf_livery_mfb;
 }
 
 /* Car 0 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_mf_1_reverser_0, vehicle_is_reversed) {
-	0: sw_mf_1_mfa_position;
-	sw_mf_1_mfb_reversed_position;
+switch (FEAT_TRAINS, PARENT, sw_mf_reverser_0, vehicle_is_reversed) {
+	0: sw_mf_mfa_position;
+	sw_mf_mfb_reversed_position;
 }
 
 /* Car 1 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_mf_1_reverser_1, vehicle_is_reversed) {
-	0: spriteset_mf_1_ff; // This car has no headlights/marker lights, so we can go directly to the spriteset.
-	spriteset_mf_1_ff_reversed; // This car is symmetrical, but un-reverse the sprite to hide any rendering inconsistencies.
+switch (FEAT_TRAINS, PARENT, sw_mf_reverser_1, vehicle_is_reversed) {
+	0: sw_mf_livery_ff; // This car has no headlights/marker lights, so we can go directly to the spriteset.
+	sw_mf_livery_ff_reversed; // This car is symmetrical, but un-reverse the sprite to hide any rendering inconsistencies.
 }
 
 /* Car 2 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_mf_1_reverser_2, vehicle_is_reversed) {
-	0: sw_mf_1_mfb_position;
-	sw_mf_1_mfa_reversed_position;
+switch (FEAT_TRAINS, PARENT, sw_mf_reverser_2, vehicle_is_reversed) {
+	0: sw_mf_mfb_position;
+	sw_mf_mfa_reversed_position;
 }
 
 /* Select the correct part of the train */
 switch (FEAT_TRAINS, SELF, sw_mf_graphics, position_in_articulated_veh) {
-	0: sw_mf_1_reverser_0; // Car 0 (first)
-	1: sw_mf_1_reverser_1; // Car 1 (middle)
-	2: sw_mf_1_reverser_2; // Car 2 (last)
+	0: sw_mf_reverser_0; // Car 0 (first)
+	1: sw_mf_reverser_1; // Car 1 (middle)
+	2: sw_mf_reverser_2; // Car 2 (last)
 }
 
 /* Assemble a 3-car articulated vehicle. */
 switch (FEAT_TRAINS, SELF, sw_mf_articulated_part, extra_callback_info1) {
 	1 .. 2: return item_mf;
 	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_mf_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_WHITE_RED);
+	1: return string(STR_LIVERY_GREY_BLUE);
+	2: return string(STR_LIVERY_RED_BLACK);
 }
 
 /* ITEM*/
@@ -148,6 +213,7 @@ item(FEAT_TRAINS, item_mf, 1) {
 		articulated_part: sw_mf_articulated_part;
 		cargo_capacity: return (position_in_articulated_veh == 1) ? 64 : 37;
 		purchase_cargo_capacity: 140 / 3;
+		cargo_subtype_text: sw_mf_cargo_subtype_text;
 		cost_factor: 90;
 		running_cost_factor: 1800;
 		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);

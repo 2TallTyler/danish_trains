@@ -10,6 +10,9 @@ STR_PARAM_DESC_CCOLOUR				:Select whether trains use their real-world colours or
 PARAM_CCOLOUR_REALISTIC				:Realistic
 PARAM_CCOLOUR_CC					:Company Colours
 
+STR_LIVERY_WHITE_RED				: (white and red)
+STR_LIVERY_GREY_BLUE				: (grey and blue)
+STR_LIVERY_RED_BLACK				: (red and black)
+
 STR_NAME_MZ_IV						:DSB Class MZ (IV) (Diesel)
 STR_NAME_MF							:DSB Class MF (Diesel)
-

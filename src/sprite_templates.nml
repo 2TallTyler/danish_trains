@@ -7,7 +7,7 @@ train_width_32_px = 1;
 
 /* Recolour switches for realistic or company colours */
 switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
-	0: return palette_2cc(COLOUR_RED, COLOUR_RED);
+	0: return palette_2cc(COLOUR_RED, COLOUR_DARK_BLUE);
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
