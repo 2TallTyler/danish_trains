@@ -1,6 +1,6 @@
 # DSB Trains
 
-![DSB Trains roster](/docs/0-2-0.png)
+![DSB Trains roster](/docs/0-2-1.png)
 
 Trains from the Danish State Railways, DSB. 
 
