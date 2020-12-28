@@ -6,7 +6,7 @@
 newgrf_name = "dsb_trains"
 
 # Files which should be first, in order (header, cargotable, etc)
-header_stuff = ["header", "sprite_templates"]
+header_stuff = ["header", "sprite_templates", "functions"]
 
 # Files to place in alphabetical order below
 unordered_stuff = ["mz_iv", "mf"]

@@ -62,11 +62,6 @@ switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
-switch (FEAT_TRAINS, SELF, sw_cc_blue, param_company_colours) {
-	0: return palette_2cc(COLOUR_DARK_BLUE, COLOUR_PALE_GREEN);
-	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
-}
-
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
 	//							more negative to shift left
@@ -96,6 +91,17 @@ template template_8_reversed(x, y) {
 }
 
 /* End Sprite Templates */
+
+
+/* Begin Functions */
+
+switch (FEAT_TRAINS, SELF, func_running_costs, cost, current_speed) {
+	0: return cost / 10; // Stopped
+	1..15: return cost / 4; // Moving below ~33.5 mph
+	return cost; // Track speed
+}
+
+/* End Functions */
 
 
 /* Begin MF */
@@ -314,7 +320,8 @@ item(FEAT_TRAINS, item_mf, 1) {
 		purchase_cargo_capacity: 140 / 3;
 		cargo_subtype_text: sw_mf_cargo_subtype_text;
 		cost_factor: 90;
-		running_cost_factor: 1800;
+		running_cost_factor: func_running_costs(1800);
+		purchase_running_cost_factor: 1800;
 		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
 	}
 }
@@ -351,7 +358,8 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		default: spriteset_mz_iv;
 		colour_mapping: sw_cc_red;
 		cost_factor: 139;
-		running_cost_factor: 5318;
+		running_cost_factor: func_running_costs(5318);
+		purchase_running_cost_factor: 5318;
 	}
 }
 

@@ -28,7 +28,8 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		default: spriteset_mz_iv;
 		colour_mapping: sw_cc_red;
 		cost_factor: 139;
-		running_cost_factor: 5318;
+		running_cost_factor: func_running_costs(5318);
+		purchase_running_cost_factor: 5318;
 	}
 }
 

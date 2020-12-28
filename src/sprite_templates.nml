@@ -11,11 +11,6 @@ switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
-switch (FEAT_TRAINS, SELF, sw_cc_blue, param_company_colours) {
-	0: return palette_2cc(COLOUR_DARK_BLUE, COLOUR_PALE_GREEN);
-	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
-}
-
 template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
 	//							more negative to shift left

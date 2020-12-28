@@ -215,7 +215,8 @@ item(FEAT_TRAINS, item_mf, 1) {
 		purchase_cargo_capacity: 140 / 3;
 		cargo_subtype_text: sw_mf_cargo_subtype_text;
 		cost_factor: 90;
-		running_cost_factor: 1800;
+		running_cost_factor: func_running_costs(1800);
+		purchase_running_cost_factor: 1800;
 		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
 	}
 }
