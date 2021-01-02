@@ -50,6 +50,7 @@ switch (FEAT_TRAINS, SELF, sw_mf_livery_mfa_reversed, cargo_subtype) {
 	2: spriteset_mf_3_mfa_reversed;
 }
 
+/* Livery selection for FF */
 switch (FEAT_TRAINS, SELF, sw_mf_livery_ff, cargo_subtype) {
 	0: spriteset_mf_1_ff;
 	1: spriteset_mf_2_ff;
@@ -62,6 +63,7 @@ switch (FEAT_TRAINS, SELF, sw_mf_livery_ff_reversed, cargo_subtype) {
 	2: spriteset_mf_3_ff_reversed;
 }
 
+/* Livery selection for MFB */
 switch (FEAT_TRAINS, SELF, sw_mf_livery_mfb, cargo_subtype) {
 	0: spriteset_mf_1_mfb;
 	1: spriteset_mf_2_mfb;
@@ -73,11 +75,6 @@ switch (FEAT_TRAINS, SELF, sw_mf_livery_mfb_reversed, cargo_subtype) {
 	1: spriteset_mf_2_mfb_reversed;
 	2: spriteset_mf_3_mfb_reversed;
 }
-
-/* Livery selection for FF */
-
-/* Livery selection for MFB */
-
 
 /* First car of vehicle is an MFA. If it is the first car of the train, display headlights.  */
 switch (FEAT_TRAINS, SELF, sw_mf_mfa_with_headlights, [
