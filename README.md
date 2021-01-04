@@ -9,6 +9,7 @@ This is a work in progress NewGRF commissioned by DenLillePrins on Discord. As s
 ## Complete
 #### EMU / DMU
 - [Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5), 3-car version (1989)
+- [Class ER](https://www.jernbanen.dk/lyntog.php?typenr=6) (1993)
 
 #### Locomotives
 - [Class MZ (IV)](https://www.jernbanen.dk/motor.php?s=8&litra=MZ&typenr=4) (IV) (1977)
@@ -24,7 +25,6 @@ This is a work in progress NewGRF commissioned by DenLillePrins on Discord. As s
 - [Class MA](https://www.jernbanen.dk/lyntog.php?typenr=3) (1963)
 - [Class MR](https://www.jernbanen.dk/lyntog.php?typenr=9) (1978)
 - [Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5), 2-car version (1993)
-- [Class ER](https://www.jernbanen.dk/lyntog.php?typenr=6) (1993)
 - [Class ET](https://www.jernbanen.dk/lyntog.php?typenr=7) (2000)
 
 #### Locomotives

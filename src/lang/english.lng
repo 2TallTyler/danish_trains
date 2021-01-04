@@ -16,3 +16,4 @@ STR_LIVERY_RED_BLACK				: (red and black)
 
 STR_NAME_MZ_IV						:DSB Class MZ (IV) (Diesel)
 STR_NAME_MF							:DSB Class MF (Diesel)
+STR_NAME_ER							:DSB Class ER (Electric)
