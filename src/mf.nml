@@ -215,6 +215,7 @@ item(FEAT_TRAINS, item_mf, 1) {
 		running_cost_factor: func_running_costs(1800);
 		purchase_running_cost_factor: 1800;
 		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
+		additional_text: string(STR_ROLE_PASS);
 	}
 }
 

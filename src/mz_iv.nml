@@ -30,6 +30,7 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		cost_factor: 139;
 		running_cost_factor: func_running_costs(5318);
 		purchase_running_cost_factor: 5318;
+		additional_text: string(STR_ROLE_PASS_FREIGHT);
 	}
 }
 
