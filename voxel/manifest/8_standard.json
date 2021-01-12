@@ -1,14 +1,15 @@
 {
-  "lighting_angle": 60,
-  "lighting_elevation": 65,
+  "lighting_angle": 50,
+  "lighting_elevation": 45,
   "depth_influence": 0,
   "tiled_normals": false,
-  "soften_edges": 3,
+  "soften_edges": 1.5,
+  "alpha_edge_threshold": 0.75,
   "sampler": "square",
-  "accuracy": 5,
+  "accuracy": 7,
   "brightness": -0.05,
   "contrast": 0.2,
-  "overlap": -0.2,
+  "overlap": 0.05,
   "size": {
     "x": 136,
     "y": 42,
@@ -19,7 +20,8 @@
   "sprites": [
     { "flip": true,
 	  "angle": 180,
-      "width": 8
+      "width": 8,
+	  "height": 28
     },
     { "flip": true,
 	  "angle": 225,
@@ -36,7 +38,8 @@
     },
 	{ "flip": true,
 	  "angle": 0,
-      "width": 8
+      "width": 8,
+	  "height": 28
     },
     { "flip": true,
 	  "angle": 45,

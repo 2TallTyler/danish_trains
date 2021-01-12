@@ -66,28 +66,28 @@ template template_8_standard(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
 	//							more negative to shift left
 	//											more negative to shift up
-    [ x,		y,		8,		24,		-3,			-14]
-    [ x+16,		y,		22,		21,		-15,		-13]
+    [ x,		y,		8,		28,		-3,			-14]
+    [ x+16,		y,		22,		23,		-15,		-13]
     [ x+46,		y,		32,		14,		-16,		-10]
-    [ x+86,		y,		22,		21,		-5,			-13]
-    [ x+116,	y,		8,		24,		-3,			-14]
-    [ x+132,	y,		22,		21,		-15,		-13]
+    [ x+86,		y,		22,		23,		-5,			-13]
+    [ x+116,	y,		8,		28,		-3,			-14]
+    [ x+132,	y,		22,		23,		-15,		-13]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		21,		-5,			-13]
+    [ x+202,	y,		22,		23,		-5,			-13]
 }
 
 template template_8_reversed(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
 	//							more negative to shift left
 	//											more negative to shift up
-    [ x+116,	y,		8,		24,		-3,			-14]
-    [ x+132,	y,		22,		21,		-15,		-13]
+    [ x+116,	y,		8,		28,		-3,			-14]
+    [ x+132,	y,		22,		23,		-15,		-13]
     [ x+162,	y,		32,		14,		-16,		-10]
-    [ x+202,	y,		22,		21,		-5,			-13]
-	[ x,		y,		8,		24,		-3,			-14]
-    [ x+16,		y,		22,		21,		-15,		-13]
+    [ x+202,	y,		22,		23,		-5,			-13]
+	[ x,		y,		8,		28,		-3,			-14]
+    [ x+16,		y,		22,		23,		-15,		-13]
     [ x+46,		y,		32,		14,		-16,		-10]
-    [ x+86,		y,		22,		21,		-5,			-13]
+    [ x+86,		y,		22,		23,		-5,			-13]
 }
 
 /* End Sprite Templates */
