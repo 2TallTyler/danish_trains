@@ -4,7 +4,7 @@ grf {
 	grfid: "TT14";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESC);
-	version: 6;
+	version: 7;
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
@@ -57,8 +57,16 @@ traininfo_y_offset = 2;
 train_width_32_px = 1;
 
 /* Recolour switches for realistic or company colours */
+
+/* DSB */
 switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
 	0: return palette_2cc(COLOUR_RED, COLOUR_DARK_BLUE);
+	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
+}
+
+/* SJ */
+switch (FEAT_TRAINS, SELF, sw_cc_blue_white, param_company_colours) {
+	0: return palette_2cc(COLOUR_BLUE, COLOUR_WHITE);
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
@@ -346,6 +354,7 @@ item(FEAT_TRAINS, item_er, 2) {
 		running_cost_factor: func_running_costs(2156);
 		purchase_running_cost_factor: 2156;
 		visual_effect_and_powered: (position_in_articulated_veh == 0) ? visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+		additional_text: string(STR_ROLE_PASS);
 	}
 }
 
@@ -568,6 +577,7 @@ item(FEAT_TRAINS, item_mf, 1) {
 		running_cost_factor: func_running_costs(1800);
 		purchase_running_cost_factor: 1800;
 		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
+		additional_text: string(STR_ROLE_PASS);
 	}
 }
 
@@ -605,7 +615,241 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		cost_factor: 139;
 		running_cost_factor: func_running_costs(5318);
 		purchase_running_cost_factor: 5318;
+		additional_text: string(STR_ROLE_PASS_FREIGHT);
 	}
 }
 
 /* End MZ (IV) */
+
+
+/* Begin X2000*/
+
+/* SPRITES */
+
+/* Lights */
+spriteset(spriteset_x2000_loco_headlights, "src\gfx\x2000_loco_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_loco_marker_lights, "src\gfx\x2000_loco_marker_lights.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_cab_headlights, "src\gfx\x2000_cab_headlights.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_cab_marker_lights, "src\gfx\x2000_cab_marker_lights.png") {template_8_standard(0,0)}
+
+/* Black, blue, and white */
+spriteset(spriteset_x2000_1_loco, "src/gfx/x2000_1_loco_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_1_loco_reversed, "src/gfx/x2000_1_loco_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_1_coach, "src/gfx/x2000_1_coach_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_1_coach_reversed, "src/gfx/x2000_1_coach_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_1_cafe, "src/gfx/x2000_1_cafe_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_1_cafe_reversed, "src/gfx/x2000_1_cafe_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_1_cab, "src/gfx/x2000_1_cab_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_1_cab_reversed, "src/gfx/x2000_1_cab_8bpp.png") {template_8_reversed(0,0)}
+
+/* White and grey */
+spriteset(spriteset_x2000_2_loco, "src/gfx/x2000_2_loco_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_2_loco_reversed, "src/gfx/x2000_2_loco_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_2_coach, "src/gfx/x2000_2_coach_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_2_coach_reversed, "src/gfx/x2000_2_coach_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_2_cafe, "src/gfx/x2000_2_cafe_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_2_cafe_reversed, "src/gfx/x2000_2_cafe_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_x2000_2_cab, "src/gfx/x2000_2_cab_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_x2000_2_cab_reversed, "src/gfx/x2000_2_cab_8bpp.png") {template_8_reversed(0,0)}
+
+
+/* SWITCHES */
+
+/* Livery switches */
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_loco;
+	return spriteset_x2000_2_loco;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_loco_reversed;
+	return spriteset_x2000_2_loco_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_coach;
+	return spriteset_x2000_2_coach;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_coach_reversed;
+	return spriteset_x2000_2_coach_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_cafe;
+	return spriteset_x2000_2_cafe;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_cafe_reversed;
+	return spriteset_x2000_2_cafe_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_cab;
+	return spriteset_x2000_2_cab;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, date_of_last_service < date(2005, 01, 01)) {
+	1: return spriteset_x2000_1_cab_reversed;
+	return spriteset_x2000_2_cab_reversed;
+}
+
+/* First car of vehicle is an x2000_loco. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_x2000_loco_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_x2000_livery_loco;    // Return the base sprite
+    1: return spriteset_x2000_loco_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an x2000_loco. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_x2000_loco_position, position_in_consist) {
+	0: return sw_x2000_loco_with_headlights;
+	return sw_x2000_livery_loco;
+}
+
+/* Sprite stack for x2000_loco with marker lights */
+switch (FEAT_TRAINS, SELF, sw_x2000_loco_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_x2000_livery_loco_reversed;    // Return the base sprite
+    1: return spriteset_x2000_loco_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an x2000_loco. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_x2000_loco_reversed_position, position_in_consist_from_end) {
+	0: return sw_x2000_loco_with_marker_lights;
+	return sw_x2000_livery_loco_reversed;
+}
+
+/* Sprite stack for x2000_cab with headlights */
+switch (FEAT_TRAINS, SELF, sw_x2000_cab_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_x2000_livery_cab_reversed;    // Return the base sprite
+    1: return spriteset_x2000_cab_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an x2000_cab. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_x2000_cab_reversed_position, position_in_consist) {
+	0: return sw_x2000_cab_with_headlights;
+	return sw_x2000_livery_cab_reversed;
+}
+
+/* Sprite stack for x2000_cab with marker lights */
+switch (FEAT_TRAINS, SELF, sw_x2000_cab_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_x2000_livery_cab;    // Return the base sprite
+    1: return spriteset_x2000_cab_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an x2000_cab. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_x2000_cab_position, position_in_consist_from_end) {
+	0: return sw_x2000_cab_with_marker_lights;
+	return sw_x2000_livery_cab;
+}
+
+/* Car 0 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_0, vehicle_is_reversed) {
+	0: sw_x2000_loco_position;
+	sw_x2000_cab_reversed_position;
+}
+
+/* Cars 1 and 4 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_1_4, vehicle_is_reversed) {
+	0: sw_x2000_livery_coach;
+	sw_x2000_livery_coach_reversed;
+}
+
+/* Car 2 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_2, vehicle_is_reversed) {
+	0: sw_x2000_livery_coach;
+	sw_x2000_livery_cafe_reversed;
+}
+
+/* Car 3 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_3, vehicle_is_reversed) {
+	0: sw_x2000_livery_cafe;
+	sw_x2000_livery_coach_reversed;
+}
+
+/* Car 5 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_5, vehicle_is_reversed) {
+	0: sw_x2000_cab_position;
+	sw_x2000_loco_reversed_position;
+}
+
+/* Select the correct part of the train */
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics, position_in_articulated_veh) {
+	0: sw_x2000_reverser_0; // Car 0 (first)
+	1: sw_x2000_reverser_1_4; // Car 1
+	2: sw_x2000_reverser_2;
+	3: sw_x2000_reverser_3; // Cafe
+	4: sw_x2000_reverser_1_4;
+	5: sw_x2000_reverser_5;
+}
+
+/* Assemble a 4-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part, extra_callback_info1) {
+	1 .. 5: return item_x2000;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_purchase, current_year) {
+	0..2004: return spriteset_x2000_1_loco;
+	return spriteset_x2000_2_loco;
+}
+
+switch (FEAT_TRAINS, SELF, sw_visual_effect_and_powered, ((position_in_articulated_veh == 0) && (vehicle_is_reversed == 0)) || ((position_in_articulated_veh_from_end == 0) && (vehicle_is_reversed == 1)) ) {
+	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
+	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+	
+
+item(FEAT_TRAINS, item_x2000, 3) {
+	property {
+		name: string(STR_NAME_X2000);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1990,09,04);
+		model_life: 40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		refit_cost: 0;
+		default_cargo_type: PASS;
+		cargo_capacity: 44;
+		loading_speed: 5;
+		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
+		sprite_id: SPRITE_ID_NEW_TRAIN; // required to enable new graphics
+		speed: 210 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_TILT, TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+		track_type: ELRL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_ELECTRIC;
+		power: 3260 kW;
+		weight: 323 tons;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_x2000_graphics;
+		purchase: sw_x2000_purchase;
+		articulated_part: sw_x2000_articulated_part;
+		colour_mapping: sw_cc_blue_white;
+		cost_factor: 257;
+		running_cost_factor: func_running_costs(6283);
+		purchase_running_cost_factor: 6283;
+		visual_effect_and_powered: sw_visual_effect_and_powered;
+		additional_text: string(STR_ROLE_LD_PASS);
+	}
+}
+
+/* End X2000 */
