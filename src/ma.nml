@@ -1,0 +1,236 @@
+
+/* Begin MF */
+
+/*
+*	Note: Class MF consist is ma-FF-am.
+*/
+
+/* GRAPHICS */
+
+/* Lights */
+spriteset(spriteset_ma_ma_headlights, "src\gfx\ma_ma_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_ma_marker_lights, "src\gfx\ma_ma_marker_lights.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_bs_headlights, "src\gfx\ma_bs_headlights.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_bs_marker_lights, "src\gfx\ma_bs_marker_lights.png") {template_8_standard(0,0)}
+
+/* White and red */
+spriteset(spriteset_ma_1_ma, "src\gfx\ma_1_ma_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_1_ma_reversed, "src\gfx\ma_1_ma_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_1_br, "src\gfx\ma_1_br_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_1_br_reversed, "src\gfx\ma_1_br_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_1_am, "src\gfx\ma_1_am_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_1_am_reversed, "src\gfx\ma_1_am_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_1_bs, "src\gfx\ma_1_bs_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_1_bs_reversed, "src\gfx\ma_1_bs_8bpp.png") {template_8_reversed(0,0)}
+
+/* Grey and red */
+spriteset(spriteset_ma_2_ma, "src\gfx\ma_2_ma_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_2_ma_reversed, "src\gfx\ma_2_ma_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_2_br, "src\gfx\ma_2_br_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_2_br_reversed, "src\gfx\ma_2_br_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_2_am, "src\gfx\ma_2_am_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_2_am_reversed, "src\gfx\ma_2_am_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_2_bs, "src\gfx\ma_2_bs_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_2_bs_reversed, "src\gfx\ma_2_bs_8bpp.png") {template_8_reversed(0,0)}
+
+/* SWITCHES */
+
+/* Livery selection for ma */
+switch (FEAT_TRAINS, SELF, sw_ma_livery_ma, cargo_subtype) {
+	0: spriteset_ma_1_ma;
+	1: spriteset_ma_2_ma;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_ma_reversed, cargo_subtype) {
+	0: spriteset_ma_1_ma_reversed;
+	1: spriteset_ma_2_ma_reversed;
+}
+
+/* Livery selection for br */
+switch (FEAT_TRAINS, SELF, sw_ma_livery_br, cargo_subtype) {
+	0: spriteset_ma_1_br;
+	1: spriteset_ma_2_br;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_br_reversed, cargo_subtype) {
+	0: spriteset_ma_1_br_reversed;
+	1: spriteset_ma_2_br_reversed;
+}
+
+/* Livery selection for bs */
+switch (FEAT_TRAINS, SELF, sw_ma_livery_am, cargo_subtype) {
+	0: spriteset_ma_1_am;
+	1: spriteset_ma_2_am;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_am_reversed, cargo_subtype) {
+	0: spriteset_ma_1_am_reversed;
+	1: spriteset_ma_2_am_reversed;
+}
+
+/* Livery selection for am */
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bs, cargo_subtype) {
+	0: spriteset_ma_1_bs;
+	1: spriteset_ma_2_bs;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bs_reversed, cargo_subtype) {
+	0: spriteset_ma_1_bs_reversed;
+	1: spriteset_ma_2_bs_reversed;
+}
+
+/* First car of vehicle is an ma. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_ma_ma_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_ma_livery_ma;    // Return the base sprite
+    1: return spriteset_ma_ma_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an ma. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_ma_ma_position, position_in_consist) {
+	0: return sw_ma_ma_with_headlights;
+	return sw_ma_livery_ma;
+}
+
+/* Sprite stack for ma with marker lights */
+switch (FEAT_TRAINS, SELF, sw_ma_ma_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_ma_livery_ma_reversed;    // Return the base sprite
+    1: return spriteset_ma_ma_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an ma. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_ma_ma_reversed_position, position_in_consist_from_end) {
+	0: return sw_ma_ma_with_marker_lights;
+	return sw_ma_livery_ma_reversed;
+}
+
+/* Sprite stack for am with headlights */
+switch (FEAT_TRAINS, SELF, sw_ma_bs_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_ma_livery_bs_reversed;    // Return the base sprite
+    1: return spriteset_ma_bs_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an am. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_ma_bs_reversed_position, position_in_consist) {
+	0: return sw_ma_bs_with_headlights;
+	return sw_ma_livery_bs_reversed;
+}
+
+/* Sprite stack for am with marker lights */
+switch (FEAT_TRAINS, SELF, sw_ma_bs_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_ma_livery_bs;    // Return the base sprite
+    1: return spriteset_ma_bs_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an am. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_ma_bs_position, position_in_consist_from_end) {
+	0: return sw_ma_bs_with_marker_lights;
+	return sw_ma_livery_bs;
+}
+
+/* Car 0 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_0, vehicle_is_reversed) {
+	0: sw_ma_ma_position;
+	sw_ma_bs_reversed_position;
+}
+
+/* Car 1 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_1, vehicle_is_reversed) {
+	0: sw_ma_livery_am; // This car has no headlights/marker lights, so we can go directly to the spriteset.
+	sw_ma_livery_br_reversed;
+}
+
+/* Car 2 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_2, vehicle_is_reversed) {
+	0: sw_ma_livery_br; // This car has no headlights/marker lights, so we can go directly to the spriteset.
+	sw_ma_livery_am_reversed;
+}
+
+/* Car 3 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_3, vehicle_is_reversed) {
+	0: sw_ma_bs_position;
+	sw_ma_ma_reversed_position;
+}
+
+/* Select the correct part of the train */
+switch (FEAT_TRAINS, SELF, sw_ma_graphics, position_in_articulated_veh) {
+	0: sw_ma_reverser_0; // Car 0 (first)
+	1: sw_ma_reverser_1; // Car 1
+	2: sw_ma_reverser_2; // Car 2
+	3: sw_ma_reverser_3; // Car 3 (last)
+}
+
+/* Assemble a 4-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_ma_articulated_part, extra_callback_info1) {
+	1 .. 3: return item_ma;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_ma_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_WHITE_RED);
+	1: return string(STR_LIVERY_GREY_RED);
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_visual_effect_and_powered, ((position_in_articulated_veh == 0) && (vehicle_is_reversed == 0)) || ((position_in_articulated_veh_from_end == 0) && (vehicle_is_reversed == 1)) ) {
+	1: return visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
+	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
+/* ITEM*/
+
+item(FEAT_TRAINS, item_ma, 2) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MA);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1963,01,01);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 31;
+		loading_speed: 6;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 160 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_SPRITE_STACK);
+		refit_cost: 0;
+		track_type: RAIL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_ELECTRIC;
+		power: 1100 hp;
+		weight: 135 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_ma_graphics;
+		purchase: spriteset_ma_1_ma;
+		colour_mapping: sw_cc_red;
+		articulated_part: sw_ma_articulated_part;
+		cargo_capacity: 31;
+		purchase_cargo_capacity: 31;
+		cargo_subtype_text: sw_ma_cargo_subtype_text;
+		cost_factor: 80;
+		running_cost_factor: func_running_costs(1900);
+		purchase_running_cost_factor: 1900;
+		visual_effect_and_powered: sw_ma_visual_effect_and_powered;
+		additional_text: string(STR_ROLE_PASS);
+	}
+}
+
+/* End MF */

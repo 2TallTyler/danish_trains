@@ -9,7 +9,7 @@ newgrf_name = "dsb_trains"
 header_stuff = ["header", "sprite_templates", "functions"]
 
 # Files to place in alphabetical order below
-unordered_stuff = ["mz_iv", "mf", "er", "x2000"]
+unordered_stuff = ["mz_iv", "mf", "er", "x2000", "ma"]
 
 # Do you want to copy the completed NewGRF to your OpenTTD folder? (True/False)
 copy_bool = True
