@@ -184,7 +184,7 @@ switch (FEAT_TRAINS, SELF, sw_x2000_purchase, current_year) {
 	return spriteset_x2000_2_loco;
 }
 
-switch (FEAT_TRAINS, SELF, sw_visual_effect_and_powered, ((position_in_articulated_veh == 0) && (vehicle_is_reversed == 0)) || ((position_in_articulated_veh_from_end == 0) && (vehicle_is_reversed == 1)) ) {
+switch (FEAT_TRAINS, SELF, sw_x2000_visual_effect_and_powered, ((position_in_articulated_veh == 0) && (vehicle_is_reversed == 0)) || ((position_in_articulated_veh_from_end == 0) && (vehicle_is_reversed == 1)) ) {
 	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
 	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
 }
@@ -224,7 +224,7 @@ item(FEAT_TRAINS, item_x2000, 3) {
 		cost_factor: 257;
 		running_cost_factor: func_running_costs(6283);
 		purchase_running_cost_factor: 6283;
-		visual_effect_and_powered: sw_visual_effect_and_powered;
+		visual_effect_and_powered: sw_x2000_visual_effect_and_powered;
 		additional_text: string(STR_ROLE_LD_PASS);
 	}
 }
