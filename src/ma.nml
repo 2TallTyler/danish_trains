@@ -139,36 +139,70 @@ switch (FEAT_TRAINS, SELF, sw_ma_bs_position, position_in_consist_from_end) {
 	return sw_ma_livery_bs;
 }
 
-/* Car 0 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_ma_reverser_0, vehicle_is_reversed) {
+/* Trainset A - 4 cars */
+
+/* Car 0a check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_0a, vehicle_is_reversed) {
 	0: sw_ma_ma_position;
 	sw_ma_bs_reversed_position;
 }
 
-/* Car 1 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_ma_reverser_1, vehicle_is_reversed) {
+/* Car 1a check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_1a, vehicle_is_reversed) {
 	0: sw_ma_livery_am; // This car has no headlights/marker lights, so we can go directly to the spriteset.
 	sw_ma_livery_br_reversed;
 }
 
-/* Car 2 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_ma_reverser_2, vehicle_is_reversed) {
+/* Car 2a check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_2a, vehicle_is_reversed) {
 	0: sw_ma_livery_br; // This car has no headlights/marker lights, so we can go directly to the spriteset.
 	sw_ma_livery_am_reversed;
 }
 
-/* Car 3 check reversed */
-switch (FEAT_TRAINS, PARENT, sw_ma_reverser_3, vehicle_is_reversed) {
+/* Car 3a check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_3a, vehicle_is_reversed) {
 	0: sw_ma_bs_position;
 	sw_ma_ma_reversed_position;
 }
 
-/* Select the correct part of the train */
-switch (FEAT_TRAINS, SELF, sw_ma_graphics, position_in_articulated_veh) {
-	0: sw_ma_reverser_0; // Car 0 (first)
-	1: sw_ma_reverser_1; // Car 1
-	2: sw_ma_reverser_2; // Car 2
-	3: sw_ma_reverser_3; // Car 3 (last)
+/* Trainset B - 8 cars */
+
+/* Car 1b check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_1b, vehicle_is_reversed) {
+	0: sw_ma_livery_am;
+	sw_ma_livery_am_reversed;
+}
+
+/* Car 2b check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_2b, vehicle_is_reversed) {
+	0: sw_ma_livery_br;
+	sw_ma_livery_br_reversed;
+}
+
+/* Select the correct part of a 4-car train */
+switch (FEAT_TRAINS, SELF, sw_ma_graphics_4, position_in_articulated_veh) {
+	0: sw_ma_reverser_0a; // Car 0 (first)
+	1: sw_ma_reverser_1a; // Car 1
+	2: sw_ma_reverser_2a; // Car 2
+	3: sw_ma_reverser_3a; // Car 3 (last)
+}
+
+/* Select the correct part of an 8-car train */
+switch (FEAT_TRAINS, SELF, sw_ma_graphics_8, position_in_vehid_chain % 8) {
+	0: sw_ma_ma_position;
+	1: sw_ma_reverser_1b;
+	2: sw_ma_reverser_2b;
+	3: sw_ma_bs_position;
+	4: sw_ma_bs_reversed_position; // 2nd trainset cab car
+	5: sw_ma_reverser_2b;
+	6: sw_ma_reverser_1b;
+	7: sw_ma_ma_reversed_position; // Rear loco
+}
+
+/* Choose a 4-car or 8-car train */
+switch (FEAT_TRAINS, SELF, sw_ma_graphics, num_vehs_in_vehid_chain) {
+	4: sw_ma_graphics_4;
+	sw_ma_graphics_8;
 }
 
 /* Assemble a 4-car articulated vehicle. */
@@ -183,10 +217,14 @@ switch (FEAT_TRAINS, SELF, sw_ma_cargo_subtype_text, cargo_subtype) {
 	1: return string(STR_LIVERY_GREY_RED);
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_visual_effect_and_powered, ((position_in_articulated_veh == 0) && (vehicle_is_reversed == 0)) || ((position_in_articulated_veh_from_end == 0) && (vehicle_is_reversed == 1)) ) {
-	1: return visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
-	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+switch (FEAT_TRAINS, SELF, sw_ma_visual_effect_and_powered_2, 
+	(((position_in_vehid_chain == 0) || (position_in_vehid_chain == 7)) && (LOAD_TEMP(1) == 0)) || 
+	(((position_in_vehid_chain_from_end == 0) || (position_in_vehid_chain_from_end == 7)) && LOAD_TEMP(1)) ) {
+		1: return visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
+		return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
 }
+
+switch (FEAT_TRAINS, PARENT, sw_ma_visual_effect_and_powered_1, STORE_TEMP(vehicle_is_reversed, 1)) {sw_ma_visual_effect_and_powered_2;}
 
 /* ITEM*/
 
@@ -228,7 +266,7 @@ item(FEAT_TRAINS, item_ma, 2) {
 		cost_factor: 80;
 		running_cost_factor: func_running_costs(1900);
 		purchase_running_cost_factor: 1900;
-		visual_effect_and_powered: sw_ma_visual_effect_and_powered;
+		visual_effect_and_powered: sw_ma_visual_effect_and_powered_1;
 		additional_text: string(STR_ROLE_PASS);
 	}
 }
