@@ -217,18 +217,16 @@ switch (FEAT_TRAINS, SELF, sw_ma_cargo_subtype_text, cargo_subtype) {
 	1: return string(STR_LIVERY_GREY_RED);
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_visual_effect_and_powered_2, 
-	(((position_in_vehid_chain == 0) || (position_in_vehid_chain == 7)) && (LOAD_TEMP(1) == 0)) || 
-	(((position_in_vehid_chain_from_end == 0) || (position_in_vehid_chain_from_end == 7)) && LOAD_TEMP(1)) ) {
+switch (FEAT_TRAINS, SELF, sw_ma_visual_effect_and_powered, 
+	(((position_in_vehid_chain == 0) || (position_in_vehid_chain == 7)) && !func_is_reversed()) || 
+	(((position_in_vehid_chain_from_end == 0) || (position_in_vehid_chain_from_end == 7)) && func_is_reversed()) ) {
 		1: return visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
 		return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
 }
 
-switch (FEAT_TRAINS, PARENT, sw_ma_visual_effect_and_powered_1, STORE_TEMP(vehicle_is_reversed, 1)) {sw_ma_visual_effect_and_powered_2;}
-
 /* ITEM*/
 
-item(FEAT_TRAINS, item_ma, 2) {
+item(FEAT_TRAINS, item_ma, 4) {
 	property {
 		/* Common properties */
 		name: string(STR_NAME_MA);
@@ -249,7 +247,7 @@ item(FEAT_TRAINS, item_ma, 2) {
 		track_type: RAIL;
 		ai_special_flag: AI_FLAG_PASSENGER;
 		running_cost_base: RUNNING_COST_STEAM;
-		engine_class: ENGINE_CLASS_ELECTRIC;
+		engine_class: ENGINE_CLASS_DIESEL;
 		power: 1100 hp;
 		weight: 135 ton;
 		tractive_effort_coefficient: 0.3;
@@ -266,7 +264,7 @@ item(FEAT_TRAINS, item_ma, 2) {
 		cost_factor: 80;
 		running_cost_factor: func_running_costs(1900);
 		purchase_running_cost_factor: 1900;
-		visual_effect_and_powered: sw_ma_visual_effect_and_powered_1;
+		visual_effect_and_powered: sw_ma_visual_effect_and_powered;
 		additional_text: string(STR_ROLE_PASS);
 	}
 }

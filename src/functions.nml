@@ -7,4 +7,6 @@ switch (FEAT_TRAINS, SELF, func_running_costs, cost, current_speed) {
 	return cost; // Track speed
 }
 
+switch (FEAT_TRAINS, PARENT, func_is_reversed, vehicle_is_reversed) {return;}
+
 /* End Functions */

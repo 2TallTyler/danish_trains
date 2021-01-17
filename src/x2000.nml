@@ -184,7 +184,7 @@ switch (FEAT_TRAINS, SELF, sw_x2000_purchase, current_year) {
 	return spriteset_x2000_2_loco;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_visual_effect_and_powered, ((position_in_articulated_veh == 0) && (vehicle_is_reversed == 0)) || ((position_in_articulated_veh_from_end == 0) && (vehicle_is_reversed == 1)) ) {
+switch (FEAT_TRAINS, SELF, sw_x2000_visual_effect_and_powered, ((position_in_articulated_veh == 0) && !func_is_reversed()) || ((position_in_articulated_veh_from_end == 0) && func_is_reversed()) ) {
 	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
 	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
 }
