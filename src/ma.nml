@@ -20,6 +20,8 @@ spriteset(spriteset_ma_1_br, "src\gfx\ma_1_br_8bpp.png") {template_8_standard(0,
 spriteset(spriteset_ma_1_br_reversed, "src\gfx\ma_1_br_8bpp.png") {template_8_reversed(0,0)}
 spriteset(spriteset_ma_1_am, "src\gfx\ma_1_am_8bpp.png") {template_8_standard(0,0)}
 spriteset(spriteset_ma_1_am_reversed, "src\gfx\ma_1_am_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_1_bm, "src\gfx\ma_1_bm_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_1_bm_reversed, "src\gfx\ma_1_bm_8bpp.png") {template_8_reversed(0,0)}
 spriteset(spriteset_ma_1_bs, "src\gfx\ma_1_bs_8bpp.png") {template_8_standard(0,0)}
 spriteset(spriteset_ma_1_bs_reversed, "src\gfx\ma_1_bs_8bpp.png") {template_8_reversed(0,0)}
 
@@ -30,6 +32,8 @@ spriteset(spriteset_ma_2_br, "src\gfx\ma_2_br_8bpp.png") {template_8_standard(0,
 spriteset(spriteset_ma_2_br_reversed, "src\gfx\ma_2_br_8bpp.png") {template_8_reversed(0,0)}
 spriteset(spriteset_ma_2_am, "src\gfx\ma_2_am_8bpp.png") {template_8_standard(0,0)}
 spriteset(spriteset_ma_2_am_reversed, "src\gfx\ma_2_am_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ma_2_bm, "src\gfx\ma_2_bm_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ma_2_bm_reversed, "src\gfx\ma_2_bm_8bpp.png") {template_8_reversed(0,0)}
 spriteset(spriteset_ma_2_bs, "src\gfx\ma_2_bs_8bpp.png") {template_8_standard(0,0)}
 spriteset(spriteset_ma_2_bs_reversed, "src\gfx\ma_2_bs_8bpp.png") {template_8_reversed(0,0)}
 
@@ -57,7 +61,7 @@ switch (FEAT_TRAINS, SELF, sw_ma_livery_br_reversed, cargo_subtype) {
 	1: spriteset_ma_2_br_reversed;
 }
 
-/* Livery selection for bs */
+/* Livery selection for am */
 switch (FEAT_TRAINS, SELF, sw_ma_livery_am, cargo_subtype) {
 	0: spriteset_ma_1_am;
 	1: spriteset_ma_2_am;
@@ -68,7 +72,18 @@ switch (FEAT_TRAINS, SELF, sw_ma_livery_am_reversed, cargo_subtype) {
 	1: spriteset_ma_2_am_reversed;
 }
 
-/* Livery selection for am */
+/* Livery selection for bm */
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bm, cargo_subtype) {
+	0: spriteset_ma_1_bm;
+	1: spriteset_ma_2_bm;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bm_reversed, cargo_subtype) {
+	0: spriteset_ma_1_bm_reversed;
+	1: spriteset_ma_2_bm_reversed;
+}
+
+/* Livery selection for bs */
 switch (FEAT_TRAINS, SELF, sw_ma_livery_bs, cargo_subtype) {
 	0: spriteset_ma_1_bs;
 	1: spriteset_ma_2_bs;
@@ -167,15 +182,15 @@ switch (FEAT_TRAINS, PARENT, sw_ma_reverser_3a, vehicle_is_reversed) {
 
 /* Trainset B - 8 cars */
 
-/* Car 1b check reversed */
-switch (FEAT_TRAINS, PARENT, sw_ma_reverser_1b, vehicle_is_reversed) {
-	0: sw_ma_livery_am;
-	sw_ma_livery_am_reversed;
-}
-
 /* Car 2b check reversed */
 switch (FEAT_TRAINS, PARENT, sw_ma_reverser_2b, vehicle_is_reversed) {
 	0: sw_ma_livery_br;
+	sw_ma_livery_bm;
+}
+
+/* Car 5b check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ma_reverser_5b, vehicle_is_reversed) {
+	0: sw_ma_livery_bm_reversed;
 	sw_ma_livery_br_reversed;
 }
 
@@ -190,12 +205,12 @@ switch (FEAT_TRAINS, SELF, sw_ma_graphics_4, position_in_articulated_veh) {
 /* Select the correct part of an 8-car train */
 switch (FEAT_TRAINS, SELF, sw_ma_graphics_8, position_in_vehid_chain % 8) {
 	0: sw_ma_ma_position;
-	1: sw_ma_reverser_1b;
+	1: sw_ma_livery_am;
 	2: sw_ma_reverser_2b;
 	3: sw_ma_bs_position;
 	4: sw_ma_bs_reversed_position; // 2nd trainset cab car
-	5: sw_ma_reverser_2b;
-	6: sw_ma_reverser_1b;
+	5: sw_ma_reverser_5b;
+	6: sw_ma_livery_am_reversed;
 	7: sw_ma_ma_reversed_position; // Rear loco
 }
 

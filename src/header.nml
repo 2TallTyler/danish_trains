@@ -47,4 +47,14 @@ basecost {
 	PR_RUNNING_TRAIN_DIESEL: -4;
 }
 
+/*
+Vehicle ID reference. These are set manually for each train so updates are savegame-compatible.
+
+1: DSB Class MF
+2: DSB Class ER
+3: SJ Class X2
+4: DSB Class MA
+
+*/
+
 /* *** End Header *** */
