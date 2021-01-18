@@ -1,0 +1,221 @@
+
+/* Begin ET */
+
+/* GRAPHICS */
+
+/* Lights */
+spriteset(spriteset_et_headlights, "src\gfx\et_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_marker_lights, "src\gfx\et_marker_lights.png") {template_8_standard(0,0)}
+
+/* Grey and blue */
+spriteset(spriteset_et_1_et_first, "src\gfx\et_1_et_first_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_1_et_first_reversed, "src\gfx\et_1_et_first_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_et_1_ft, "src\gfx\et_1_ft_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_1_ft_reversed, "src\gfx\et_1_ft_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_et_1_et_second, "src\gfx\et_1_et_second_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_1_et_second_reversed, "src\gfx\et_1_et_second_8bpp.png") {template_8_reversed(0,0)}
+
+/* Grey and red */
+spriteset(spriteset_et_2_et_first, "src\gfx\et_2_et_first_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_2_et_first_reversed, "src\gfx\et_2_et_first_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_et_2_ft, "src\gfx\et_2_ft_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_2_ft_reversed, "src\gfx\et_2_ft_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_et_2_et_second, "src\gfx\et_2_et_second_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_et_2_et_second_reversed, "src\gfx\et_2_et_second_8bpp.png") {template_8_reversed(0,0)}
+
+/* SWITCHES */
+
+/* Select livery type */
+
+switch (FEAT_TRAINS, SELF, sw_et_livery_date, date_of_last_service) {
+	0..date(2018, 1, 1): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_et_livery_type, param_livery_selection) {
+	0: sw_et_livery_date;
+	return cargo_subtype;
+}
+
+/* Select the right livery for each sprite */
+
+/* Livery selection for et (first class) */
+switch (FEAT_TRAINS, SELF, sw_et_livery_et_first, sw_et_livery_type()) {
+	0: spriteset_et_1_et_first;
+	1: spriteset_et_2_et_first;
+}
+
+switch (FEAT_TRAINS, SELF, sw_et_livery_et_first_reversed, sw_et_livery_type()) {
+	0: spriteset_et_1_et_first_reversed;
+	1: spriteset_et_2_et_first_reversed;
+}
+
+/* Livery selection for ft */
+switch (FEAT_TRAINS, SELF, sw_et_livery_ft, sw_et_livery_type()) {
+	0: spriteset_et_1_ft;
+	1: spriteset_et_2_ft;
+}
+
+switch (FEAT_TRAINS, SELF, sw_et_livery_ft_reversed, sw_et_livery_type()) {
+	0: spriteset_et_1_ft_reversed;
+	1: spriteset_et_2_ft_reversed;
+}
+
+/* Livery selection for et (second class) */
+switch (FEAT_TRAINS, SELF, sw_et_livery_et_second, sw_et_livery_type()) {
+	0: spriteset_et_1_et_second;
+	1: spriteset_et_2_et_second;
+}
+
+switch (FEAT_TRAINS, SELF, sw_et_livery_et_second_reversed, sw_et_livery_type()) {
+	0: spriteset_et_1_et_second_reversed;
+	1: spriteset_et_2_et_second_reversed;
+}
+
+/* First car of vehicle is an et_first. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_et_et_first_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_et_livery_et_first;    // Return the base sprite
+    1: return spriteset_et_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an et_first. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_et_et_first_position, position_in_consist) {
+	0: return sw_et_et_first_with_headlights;
+	return sw_et_livery_et_first;
+}
+
+/* Sprite stack for et_first with marker lights */
+switch (FEAT_TRAINS, SELF, sw_et_et_first_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_et_livery_et_first_reversed;    // Return the base sprite
+    1: return spriteset_et_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an et_first. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_et_et_first_reversed_position, position_in_consist_from_end) {
+	0: return sw_et_et_first_with_marker_lights;
+	return sw_et_livery_et_first_reversed;
+}
+
+/* Sprite stack for et_second with headlights */
+switch (FEAT_TRAINS, SELF, sw_et_et_second_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_et_livery_et_second_reversed;    // Return the base sprite
+    1: return spriteset_et_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an et_second. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_et_et_second_reversed_position, position_in_consist) {
+	0: return sw_et_et_second_with_headlights;
+	return sw_et_livery_et_second_reversed;
+}
+
+/* Sprite stack for et_second with marker lights */
+switch (FEAT_TRAINS, SELF, sw_et_et_second_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_et_livery_et_second;    // Return the base sprite
+    1: return spriteset_et_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an et_second. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_et_et_second_position, position_in_consist_from_end) {
+	0: return sw_et_et_second_with_marker_lights;
+	return sw_et_livery_et_second;
+}
+
+/* Car 0 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_et_reverser_0, vehicle_is_reversed) {
+	0: sw_et_et_first_position;
+	sw_et_et_second_reversed_position;
+}
+
+/* Car 1 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_et_reverser_1, vehicle_is_reversed) {
+	0: sw_et_livery_ft; // This car has no headlights/marker lights, so we can go directly to the spriteset.
+	sw_et_livery_ft_reversed;
+}
+
+/* Car 2 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_et_reverser_2, vehicle_is_reversed) {
+	0: sw_et_et_second_position;
+	sw_et_et_first_reversed_position;
+}
+
+/* Select the correct part of the train */
+switch (FEAT_TRAINS, SELF, sw_et_graphics, position_in_articulated_veh) {
+	0: sw_et_reverser_0; // Car 0 (first)
+	1: sw_et_reverser_1; // Car 1
+	2: sw_et_reverser_2; // Car 2 (last)
+}
+
+/* Assemble a 4-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_et_articulated_part, extra_callback_info1) {
+	1 .. 2: return item_et;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_et_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_GREY_BLUE);
+	1: return string(STR_LIVERY_GREY_RED);
+}
+
+switch (FEAT_TRAINS, SELF, sw_et_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_et_cargo_subtype_text;
+}
+
+/* ITEM*/
+
+item(FEAT_TRAINS, item_et, 5) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_ET);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(2000,07,02);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 65;
+		loading_speed: 5;
+		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 180 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_SPRITE_STACK);
+		refit_cost: 0;
+		track_type:	ELRL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_ELECTRIC;
+		power: 2120 kW;
+		weight: 133 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_et_graphics;
+		purchase: sw_et_livery_et_first;
+		colour_mapping: sw_cc_red_mauve;
+		articulated_part: sw_et_articulated_part;
+		cargo_subtype_text: sw_et_cargo_subtype;
+		cost_factor: 103;
+		running_cost_factor: func_running_costs(1820);
+		purchase_running_cost_factor: 1820;
+		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+		additional_text: string(STR_ROLE_EXPRESS_PASS);
+	}
+}
+
+/* End ET */

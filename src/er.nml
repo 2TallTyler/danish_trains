@@ -1,9 +1,5 @@
 
-/* Begin MF */
-
-/*
-*	Note: Class MF consist is er20xx-FF-er21xx.
-*/
+/* Begin ER */
 
 /* GRAPHICS */
 
@@ -270,4 +266,4 @@ item(FEAT_TRAINS, item_er, 2) {
 	}
 }
 
-/* End MF */
+/* End ER */
