@@ -17,7 +17,7 @@ PARAM_CCOLOUR_CC					:2CC
 
 STR_ROLE_PASS_FREIGHT				:Role: {GOLD}Passenger or Freight
 STR_ROLE_PASS						:Role: {GOLD}Passenger
-STR_ROLE_LD_PASS					:Role: {GOLD}Express Passenger
+STR_ROLE_EXPRESS_PASS				:Role: {GOLD}Express Passenger
 
 STR_LIVERY_GREY						: (grey)
 STR_LIVERY_GREY_BLUE				: (grey and blue)
@@ -27,6 +27,7 @@ STR_LIVERY_WHITE_BLUE				: (white and blue)
 STR_LIVERY_WHITE_RED				: (white and red)
 
 STR_NAME_ER							:DSB Class ER (Electric)
+STR_NAME_ET							:DSB Class ET (Electric)
 STR_NAME_MA							:DSB Class MA (Diesel)
 STR_NAME_MF							:DSB Class MF (Diesel)
 STR_NAME_MZ_IV						:DSB Class MZ (IV) (Diesel)

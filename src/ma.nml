@@ -272,7 +272,8 @@ item(FEAT_TRAINS, item_ma, 4) {
 		refittable_cargo_classes: bitmask(CC_PASSENGERS);
 		default_cargo_type: PASS;
 		cargo_capacity: 31;
-		loading_speed: 6;
+		loading_speed: 5;
+		cargo_age_period: 278; // 1.5 times normal for express train
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 160 km/h;
@@ -299,7 +300,7 @@ item(FEAT_TRAINS, item_ma, 4) {
 		running_cost_factor: func_running_costs(1900);
 		purchase_running_cost_factor: 1900;
 		visual_effect_and_powered: sw_ma_visual_effect_and_powered;
-		additional_text: string(STR_ROLE_PASS);
+		additional_text: string(STR_ROLE_EXPRESS_PASS);
 	}
 }
 

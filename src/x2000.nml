@@ -244,7 +244,7 @@ item(FEAT_TRAINS, item_x2000, 3) {
 		running_cost_factor: func_running_costs(6283);
 		purchase_running_cost_factor: 6283;
 		visual_effect_and_powered: sw_x2000_visual_effect_and_powered;
-		additional_text: string(STR_ROLE_LD_PASS);
+		additional_text: string(STR_ROLE_EXPRESS_PASS);
 	}
 }
 
