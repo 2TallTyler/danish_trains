@@ -188,8 +188,7 @@ item(FEAT_TRAINS, item_et, 5) {
 		refittable_cargo_classes: bitmask(CC_PASSENGERS);
 		default_cargo_type: PASS;
 		cargo_capacity: 65;
-		loading_speed: 5;
-		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
+		loading_speed: 6;
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 180 km/h;
@@ -214,7 +213,7 @@ item(FEAT_TRAINS, item_et, 5) {
 		running_cost_factor: func_running_costs(1820);
 		purchase_running_cost_factor: 1820;
 		visual_effect_and_powered: (position_in_articulated_veh == 1) ? visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
-		additional_text: string(STR_ROLE_EXPRESS_PASS);
+		additional_text: string(STR_ROLE_PASS);
 	}
 }
 

@@ -8,10 +8,12 @@ This is a work in progress NewGRF commissioned by DenLillePrins on Discord. As s
 
 ## Complete
 #### Trainsets
+- [DSB Class ER](https://www.jernbanen.dk/lyntog.php?typenr=6) (1993)
+- [DSB Class ET](https://www.jernbanen.dk/lyntog.php?typenr=7) (2000)
 - [DSB Class MA](https://www.jernbanen.dk/lyntog.php?typenr=3) (1963)
 - [DSB Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5), 3-car version (1989)
-- [DSB Class ER](https://www.jernbanen.dk/lyntog.php?typenr=6) (1993)
 - [SJ Class X2](https://en.wikipedia.org/wiki/X_2000) (1990)
+
 
 #### Diesel Locomotives
 - [DSB Class MZ (IV)](https://www.jernbanen.dk/motor.php?s=8&litra=MZ&typenr=4) (IV) (1977)
@@ -24,9 +26,8 @@ This is a work in progress NewGRF commissioned by DenLillePrins on Discord. As s
 - [Fourth generation](https://www.jernbanen.dk/s-tog.php?typenr=54) (1996)
 
 #### Trainsets
-- [DSB Class MR](https://www.jernbanen.dk/lyntog.php?typenr=9) (1978)
 - [DSB Class MF](https://www.jernbanen.dk/lyntog.php?typenr=5), 2-car version (1993)
-- [DSB Class ET](https://www.jernbanen.dk/lyntog.php?typenr=7) (2000)
+- [DSB Class MR](https://www.jernbanen.dk/lyntog.php?typenr=9) (1978)
 
 #### Diesel Locomotives
 - [DSB Class EA](https://www.jernbanen.dk/motor.php?s=8&litra=EA) (1984)
