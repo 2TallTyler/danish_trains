@@ -220,6 +220,11 @@ switch (FEAT_TRAINS, SELF, sw_er_cargo_subtype, param_livery_selection) {
 	return sw_er_cargo_subtype_text;
 }
 
+switch (FEAT_TRAINS, SELF, sw_er_visual_effect_and_powered, ((position_in_articulated_veh == 0) && !func_is_reversed()) || ((position_in_articulated_veh_from_end == 0) && func_is_reversed()) ) {
+	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
+	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
 /* ITEM*/
 
 item(FEAT_TRAINS, item_er, 2) {
@@ -260,7 +265,7 @@ item(FEAT_TRAINS, item_er, 2) {
 		cost_factor: 120;
 		running_cost_factor: func_running_costs(2156);
 		purchase_running_cost_factor: 2156;
-		visual_effect_and_powered: (position_in_articulated_veh == 0) ? visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER) : visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+		visual_effect_and_powered: sw_er_visual_effect_and_powered;
 		additional_text: string(STR_ROLE_PASS);
 	}
 }
