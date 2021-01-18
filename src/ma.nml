@@ -39,57 +39,71 @@ spriteset(spriteset_ma_2_bs_reversed, "src\gfx\ma_2_bs_8bpp.png") {template_8_re
 
 /* SWITCHES */
 
+/* Select livery type */
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_date, date_of_last_service) {
+	0..date(1984, 1, 1): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ma_livery_type, param_livery_selection) {
+	0: sw_ma_livery_date;
+	return cargo_subtype;
+}
+
+/* Select the right livery for each sprite */
+
 /* Livery selection for ma */
-switch (FEAT_TRAINS, SELF, sw_ma_livery_ma, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_ma, sw_ma_livery_type()) {
 	0: spriteset_ma_1_ma;
 	1: spriteset_ma_2_ma;
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_livery_ma_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_ma_reversed, sw_ma_livery_type()) {
 	0: spriteset_ma_1_ma_reversed;
 	1: spriteset_ma_2_ma_reversed;
 }
 
 /* Livery selection for br */
-switch (FEAT_TRAINS, SELF, sw_ma_livery_br, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_br, sw_ma_livery_type()) {
 	0: spriteset_ma_1_br;
 	1: spriteset_ma_2_br;
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_livery_br_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_br_reversed, sw_ma_livery_type()) {
 	0: spriteset_ma_1_br_reversed;
 	1: spriteset_ma_2_br_reversed;
 }
 
 /* Livery selection for am */
-switch (FEAT_TRAINS, SELF, sw_ma_livery_am, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_am, sw_ma_livery_type()) {
 	0: spriteset_ma_1_am;
 	1: spriteset_ma_2_am;
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_livery_am_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_am_reversed, sw_ma_livery_type()) {
 	0: spriteset_ma_1_am_reversed;
 	1: spriteset_ma_2_am_reversed;
 }
 
 /* Livery selection for bm */
-switch (FEAT_TRAINS, SELF, sw_ma_livery_bm, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bm, sw_ma_livery_type()) {
 	0: spriteset_ma_1_bm;
 	1: spriteset_ma_2_bm;
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_livery_bm_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bm_reversed, sw_ma_livery_type()) {
 	0: spriteset_ma_1_bm_reversed;
 	1: spriteset_ma_2_bm_reversed;
 }
 
 /* Livery selection for bs */
-switch (FEAT_TRAINS, SELF, sw_ma_livery_bs, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bs, sw_ma_livery_type()) {
 	0: spriteset_ma_1_bs;
 	1: spriteset_ma_2_bs;
 }
 
-switch (FEAT_TRAINS, SELF, sw_ma_livery_bs_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_ma_livery_bs_reversed, sw_ma_livery_type()) {
 	0: spriteset_ma_1_bs_reversed;
 	1: spriteset_ma_2_bs_reversed;
 }
@@ -232,6 +246,11 @@ switch (FEAT_TRAINS, SELF, sw_ma_cargo_subtype_text, cargo_subtype) {
 	1: return string(STR_LIVERY_GREY_RED);
 }
 
+switch (FEAT_TRAINS, SELF, sw_ma_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_ma_cargo_subtype_text;
+}
+
 switch (FEAT_TRAINS, SELF, sw_ma_visual_effect_and_powered, 
 	(((position_in_vehid_chain == 0) || (position_in_vehid_chain == 7)) && !func_is_reversed()) || 
 	(((position_in_vehid_chain_from_end == 0) || (position_in_vehid_chain_from_end == 7)) && func_is_reversed()) ) {
@@ -270,12 +289,12 @@ item(FEAT_TRAINS, item_ma, 4) {
 	}
 	graphics {
 		default: sw_ma_graphics;
-		purchase: spriteset_ma_1_ma;
+		purchase: sw_ma_livery_ma;
 		colour_mapping: sw_cc_red;
 		articulated_part: sw_ma_articulated_part;
 		cargo_capacity: 31;
 		purchase_cargo_capacity: 31;
-		cargo_subtype_text: sw_ma_cargo_subtype_text;
+		cargo_subtype_text: sw_ma_cargo_subtype;
 		cost_factor: 80;
 		running_cost_factor: func_running_costs(1900);
 		purchase_running_cost_factor: 1900;

@@ -4,12 +4,25 @@ grf {
 	grfid: "TT14";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESC);
-	version: 7;
+	version: 8;
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
 	
 	param 0 {
+		param_livery_selection {
+			name: string(STR_PARAM_NAME_LIVERY_SELECT);
+			desc: string(STR_PARAM_DESC_LIVERY_SELECT);
+			min_value: 0;
+			max_value: 1;
+			def_value: 0;
+			names: {
+				0: string(PARAM_LIVERY_AUTOMATIC);
+				1: string(PARAM_LIVERY_REFIT);
+			};
+		}
+	}
+	param 1 {
 		param_company_colours {
 			name: string(STR_PARAM_NAME_CCOLOUR);
 			desc: string(STR_PARAM_DESC_CCOLOUR);

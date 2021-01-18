@@ -32,44 +32,57 @@ spriteset(spriteset_x2000_2_cab_reversed, "src/gfx/x2000_2_cab_8bpp.png") {templ
 
 /* SWITCHES */
 
-/* Livery switches */
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_loco;
+/* Select livery type */
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_date, date_of_last_service) {
+	0..date(2005, 1, 1): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_type, param_livery_selection) {
+	0: sw_x2000_livery_date;
+	return cargo_subtype;
+}
+
+/* Select the right livery for each sprite */
+
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_loco;
 	return spriteset_x2000_2_loco;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_loco_reversed;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_loco_reversed;
 	return spriteset_x2000_2_loco_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_coach;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_coach;
 	return spriteset_x2000_2_coach;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_coach_reversed;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_coach_reversed;
 	return spriteset_x2000_2_coach_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_cafe;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_cafe;
 	return spriteset_x2000_2_cafe;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_cafe_reversed;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_cafe_reversed;
 	return spriteset_x2000_2_cafe_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_cab;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_cab;
 	return spriteset_x2000_2_cab;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, date_of_last_service < date(2005, 01, 01)) {
-	1: return spriteset_x2000_1_cab_reversed;
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, sw_x2000_livery_type()) {
+	0: return spriteset_x2000_1_cab_reversed;
 	return spriteset_x2000_2_cab_reversed;
 }
 
@@ -179,16 +192,21 @@ switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part, extra_callback_info1) {
 	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_purchase, current_year) {
-	0..2004: return spriteset_x2000_1_loco;
-	return spriteset_x2000_2_loco;
-}
-
 switch (FEAT_TRAINS, SELF, sw_x2000_visual_effect_and_powered, ((position_in_articulated_veh == 0) && !func_is_reversed()) || ((position_in_articulated_veh_from_end == 0) && func_is_reversed()) ) {
 	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
 	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
 }
-	
+
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_WHITE_BLUE);
+	1: return string(STR_LIVERY_GREY);
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_x2000_cargo_subtype_text;
+}
 
 item(FEAT_TRAINS, item_x2000, 3) {
 	property {
@@ -218,9 +236,10 @@ item(FEAT_TRAINS, item_x2000, 3) {
 	}
 	graphics {
 		default: sw_x2000_graphics;
-		purchase: sw_x2000_purchase;
+		purchase: sw_x2000_livery_loco;
 		articulated_part: sw_x2000_articulated_part;
 		colour_mapping: sw_cc_blue_white;
+		cargo_subtype_text: sw_x2000_cargo_subtype;
 		cost_factor: 257;
 		running_cost_factor: func_running_costs(6283);
 		purchase_running_cost_factor: 6283;

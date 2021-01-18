@@ -43,53 +43,68 @@ spriteset(spriteset_er_3_er21xx_reversed, "src\gfx\er_3_er21xx_8bpp.png") {templ
 
 /* SWITCHES */
 
+/* Select livery type */
+
+switch (FEAT_TRAINS, SELF, sw_er_livery_date, date_of_last_service) {
+	0..date(2005, 1, 1): return 0;
+	date(2005, 1, 2)..date(2021, 1, 1): return 1;
+	return 2;
+}
+
+switch (FEAT_TRAINS, SELF, sw_er_livery_type, param_livery_selection) {
+	0: sw_er_livery_date;
+	return cargo_subtype;
+}
+
+/* Select the right livery for each sprite */
+
 /* Livery selection for er20xx */
-switch (FEAT_TRAINS, SELF, sw_er_livery_er20xx, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_er20xx, sw_er_livery_type()) {
 	0: spriteset_er_1_er20xx;
 	1: spriteset_er_2_er20xx;
 	2: spriteset_er_3_er20xx;
 }
 
-switch (FEAT_TRAINS, SELF, sw_er_livery_er20xx_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_er20xx_reversed, sw_er_livery_type()) {
 	0: spriteset_er_1_er20xx_reversed;
 	1: spriteset_er_2_er20xx_reversed;
 	2: spriteset_er_3_er20xx_reversed;
 }
 
 /* Livery selection for fr22xx */
-switch (FEAT_TRAINS, SELF, sw_er_livery_fr22xx, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_fr22xx, sw_er_livery_type()) {
 	0: spriteset_er_1_fr22xx;
 	1: spriteset_er_2_fr22xx;
 	2: spriteset_er_3_fr22xx;
 }
 
-switch (FEAT_TRAINS, SELF, sw_er_livery_fr22xx_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_fr22xx_reversed, sw_er_livery_type()) {
 	0: spriteset_er_1_fr22xx_reversed;
 	1: spriteset_er_2_fr22xx_reversed;
 	2: spriteset_er_3_fr22xx_reversed;
 }
 
 /* Livery selection for fr23xx */
-switch (FEAT_TRAINS, SELF, sw_er_livery_fr23xx, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_fr23xx, sw_er_livery_type()) {
 	0: spriteset_er_1_fr23xx;
 	1: spriteset_er_2_fr23xx;
 	2: spriteset_er_3_fr23xx;
 }
 
-switch (FEAT_TRAINS, SELF, sw_er_livery_fr23xx_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_fr23xx_reversed, sw_er_livery_type()) {
 	0: spriteset_er_1_fr23xx_reversed;
 	1: spriteset_er_2_fr23xx_reversed;
 	2: spriteset_er_3_fr23xx_reversed;
 }
 
 /* Livery selection for er21xx */
-switch (FEAT_TRAINS, SELF, sw_er_livery_er21xx, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_er21xx, sw_er_livery_type()) {
 	0: spriteset_er_1_er21xx;
 	1: spriteset_er_2_er21xx;
 	2: spriteset_er_3_er21xx;
 }
 
-switch (FEAT_TRAINS, SELF, sw_er_livery_er21xx_reversed, cargo_subtype) {
+switch (FEAT_TRAINS, SELF, sw_er_livery_er21xx_reversed, sw_er_livery_type()) {
 	0: spriteset_er_1_er21xx_reversed;
 	1: spriteset_er_2_er21xx_reversed;
 	2: spriteset_er_3_er21xx_reversed;
@@ -200,6 +215,11 @@ switch (FEAT_TRAINS, SELF, sw_er_cargo_subtype_text, cargo_subtype) {
 	2: return string(STR_LIVERY_RED_BLACK);
 }
 
+switch (FEAT_TRAINS, SELF, sw_er_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_er_cargo_subtype_text;
+}
+
 /* ITEM*/
 
 item(FEAT_TRAINS, item_er, 2) {
@@ -231,12 +251,12 @@ item(FEAT_TRAINS, item_er, 2) {
 	}
 	graphics {
 		default: sw_er_graphics;
-		purchase: spriteset_er_1_er20xx;
+		purchase: sw_er_livery_er20xx;
 		colour_mapping: sw_cc_red;
 		articulated_part: sw_er_articulated_part;
 		cargo_capacity: 52;
 		purchase_cargo_capacity: 52;
-		cargo_subtype_text: sw_er_cargo_subtype_text;
+		cargo_subtype_text: sw_er_cargo_subtype;
 		cost_factor: 120;
 		running_cost_factor: func_running_costs(2156);
 		purchase_running_cost_factor: 2156;
