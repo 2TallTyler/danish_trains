@@ -3,6 +3,22 @@
 
 /* Real livery sprites */
 spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_iv_headlights, "src\gfx\mz_headlights.png") {template_8_standard(0,0)}
+
+/* Headlight sprite stacker.  */
+switch (FEAT_TRAINS, SELF, sw_mz_iv_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_mz_iv;    // Return the base sprite
+    1: return spriteset_mz_iv_headlights;    // Return the overlay
+}
+
+/* If this loco is leading the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mz_iv_position, position_in_consist) {
+	0: return sw_mz_iv_with_headlights;
+	return spriteset_mz_iv;
+}
 
 item(FEAT_TRAINS, item_mz_iv, 0) {
 	property {
@@ -16,6 +32,7 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 103 mph;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
 		track_type:	RAIL;
 		running_cost_base: RUNNING_COST_STEAM;
 		engine_class: ENGINE_CLASS_DIESEL;
@@ -25,7 +42,7 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		length: 8;
 	}
 	graphics {
-		default: spriteset_mz_iv;
+		default: sw_mz_iv_position;
 		colour_mapping: sw_cc_red;
 		cost_factor: 139;
 		running_cost_factor: func_running_costs(5318);
