@@ -63,11 +63,14 @@ basecost {
 /*
 Vehicle ID reference. These are set manually for each train so updates are savegame-compatible.
 
-1: DSB Class MF
+0: DSB Class MZ (IV)
+1: DSB Class MF (IC3)
 2: DSB Class ER
 3: SJ Class X2
 4: DSB Class MA
 5: DSB Class ET
+6: DSB Class MF (IC2)
+7: DSB Class MZ (II)
 
 */
 
@@ -85,6 +88,11 @@ train_width_32_px = 1;
 /* DSB */
 switch (FEAT_TRAINS, SELF, sw_cc_red, param_company_colours) {
 	0: return palette_2cc(COLOUR_RED, COLOUR_DARK_BLUE);
+	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
+}
+
+switch (FEAT_TRAINS, SELF, sw_cc_red_cream, param_company_colours) {
+	0: return palette_2cc(COLOUR_RED, COLOUR_CREAM);
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
@@ -1185,10 +1193,255 @@ item(FEAT_TRAINS, item_mf, 1) {
 /* End MF */
 
 
+/* Begin MF / IC2 */
+
+/*
+*	Note: IR2 consist is MFA-FS.
+*/
+
+/* GRAPHICS */
+
+/* Lights */
+spriteset(spriteset_ic2_headlights, "src\gfx\mf_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_ic2_marker_lights, "src\gfx\mf_marker_lights.png") {template_8_standard(0,0)}
+
+/* White and red */
+spriteset(spriteset_ic2_1_mfa, "src\gfx\ic2_mfa_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ic2_1_mfa_reversed, "src\gfx\ic2_mfa_8bpp.png") {template_8_reversed(0,0)}
+spriteset(spriteset_ic2_1_fs, "src\gfx\ic2_fs_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_ic2_1_fs_reversed, "src\gfx\ic2_fs_8bpp.png") {template_8_reversed(0,0)}
+
+/* SWITCHES */
+
+/* First car of vehicle is an MFA. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_ic2_mfa_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_ic2_1_mfa;    // Return the base sprite
+    1: return spriteset_ic2_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an MFA. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_ic2_mfa_position, position_in_consist) {
+	0: return sw_ic2_mfa_with_headlights;
+	return spriteset_ic2_1_mfa;
+}
+
+/* Sprite stack for MFA with marker lights */
+switch (FEAT_TRAINS, SELF, sw_ic2_mfa_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_ic2_1_mfa_reversed;    // Return the base sprite
+    1: return spriteset_ic2_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an MFA. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_ic2_mfa_reversed_position, position_in_consist_from_end) {
+	0: return sw_ic2_mfa_with_marker_lights;
+	return spriteset_ic2_1_mfa_reversed;
+}
+
+/* Sprite stack for FS with headlights */
+switch (FEAT_TRAINS, SELF, sw_ic2_fs_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_ic2_1_fs_reversed;    // Return the base sprite
+    1: return spriteset_ic2_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an FS. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_ic2_fs_reversed_position, position_in_consist) {
+	0: return sw_ic2_fs_with_headlights;
+	return spriteset_ic2_1_fs_reversed;
+}
+
+/* Sprite stack for FS with marker lights */
+switch (FEAT_TRAINS, SELF, sw_ic2_fs_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_ic2_1_fs;    // Return the base sprite
+    1: return spriteset_ic2_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an FS. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_ic2_fs_position, position_in_consist_from_end) {
+	0: return sw_ic2_fs_with_marker_lights;
+	return spriteset_ic2_1_fs;
+}
+
+/* Car 0 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ic2_reverser_0, vehicle_is_reversed) {
+	0: sw_ic2_mfa_position;
+	sw_ic2_fs_reversed_position;
+}
+
+/* Car 2 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_ic2_reverser_1, vehicle_is_reversed) {
+	0: sw_ic2_fs_position;
+	sw_ic2_mfa_reversed_position;
+}
+
+/* Select the correct part of the train */
+switch (FEAT_TRAINS, SELF, sw_ic2_graphics, position_in_articulated_veh) {
+	0: sw_ic2_reverser_0; // Car 0 (first)
+	1: sw_ic2_reverser_1; // Car 1 (last)
+}
+
+/* Assemble a 2-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_ic2_articulated_part, extra_callback_info1) {
+	1: return item_ic2;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch (FEAT_TRAINS, SELF, sw_ic2_visual_effect_and_powered, ((position_in_articulated_veh == 0) && !func_is_reversed()) || ((position_in_articulated_veh_from_end == 0) && func_is_reversed()) ) {
+	1: return visual_effect_and_powered(VISUAL_EFFECT_DIESEL, 0, ENABLE_WAGON_POWER);
+	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
+/* ITEM*/
+
+item(FEAT_TRAINS, item_ic2, 6) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MF_IC2);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1992,01,01);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 48;
+		loading_speed: 6;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 180 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_SPRITE_STACK);
+		refit_cost: 0;
+		track_type:	RAIL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_DIESEL;
+		power: 627 kW;
+		weight: 60 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_ic2_graphics;
+		purchase: spriteset_ic2_1_mfa;
+		colour_mapping: sw_cc_red;
+		articulated_part: sw_ic2_articulated_part;
+		cost_factor: 65;
+		running_cost_factor: func_running_costs(1260);
+		purchase_running_cost_factor: 1260;
+		visual_effect_and_powered: sw_ic2_visual_effect_and_powered;
+		additional_text: string(STR_ROLE_PASS);
+	}
+}
+
+/* End MF / ic2 */
+
+
+/* Begin MZ (II) */
+
+/* GRAPHICS */
+spriteset(spriteset_mz_ii_1, "src\gfx\mz_ii_1_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_ii_2, "src\gfx\mz_ii_2_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_ii_headlights, "src\gfx\mz_headlights.png") {template_8_standard(0,0)}
+
+
+/* SWITCHES */
+
+switch (FEAT_TRAINS, SELF, sw_mz_ii_livery_date, date_of_last_service) {
+	0..date(1984, 1, 1): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mz_ii_livery_type, param_livery_selection) {
+	0: sw_mz_ii_livery_date;
+	return cargo_subtype;
+}
+
+/* Livery selection */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_livery, sw_mz_ii_livery_type()) {
+	0: spriteset_mz_ii_1;
+	1: spriteset_mz_ii_2;
+}
+
+/* Headlight sprite stacker.  */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mz_ii_livery;    // Return the base sprite
+    1: return spriteset_mz_ii_headlights;    // Return the overlay
+}
+
+/* If this loco is leading the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_position, position_in_consist) {
+	0: return sw_mz_ii_with_headlights;
+	return sw_mz_ii_livery;
+}
+
+item(FEAT_TRAINS, item_mz_ii, 7) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MZ_II);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1970,01,01);
+		model_life:	40; // retired in 2008
+		vehicle_life: 40;
+		reliability_decay: 20;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 143 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
+		track_type:	RAIL;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_DIESEL;
+		power: 3300 hp;
+		weight: 117 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_mz_ii_position;
+		colour_mapping: sw_cc_red_cream;
+		cost_factor: 86;
+		running_cost_factor: func_running_costs(3704);
+		purchase_running_cost_factor: 3704;
+		additional_text: string(STR_ROLE_PASS_FREIGHT);
+	}
+}
+
+/* End MZ (II) */
+
+
 /* Begin MZ (IV) */
 
 /* Real livery sprites */
 spriteset(spriteset_mz_iv, "src\gfx\mz_iv_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_iv_headlights, "src\gfx\mz_headlights.png") {template_8_standard(0,0)}
+
+/* Headlight sprite stacker.  */
+switch (FEAT_TRAINS, SELF, sw_mz_iv_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_mz_iv;    // Return the base sprite
+    1: return spriteset_mz_iv_headlights;    // Return the overlay
+}
+
+/* If this loco is leading the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mz_iv_position, position_in_consist) {
+	0: return sw_mz_iv_with_headlights;
+	return spriteset_mz_iv;
+}
 
 item(FEAT_TRAINS, item_mz_iv, 0) {
 	property {
@@ -1202,6 +1455,7 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 103 mph;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
 		track_type:	RAIL;
 		running_cost_base: RUNNING_COST_STEAM;
 		engine_class: ENGINE_CLASS_DIESEL;
@@ -1211,11 +1465,11 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		length: 8;
 	}
 	graphics {
-		default: spriteset_mz_iv;
+		default: sw_mz_iv_position;
 		colour_mapping: sw_cc_red;
-		cost_factor: 139;
-		running_cost_factor: func_running_costs(5318);
-		purchase_running_cost_factor: 5318;
+		cost_factor: 109;
+		running_cost_factor: func_running_costs(5126);
+		purchase_running_cost_factor: 5126;
 		additional_text: string(STR_ROLE_PASS_FREIGHT);
 	}
 }

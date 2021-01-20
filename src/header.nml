@@ -63,11 +63,14 @@ basecost {
 /*
 Vehicle ID reference. These are set manually for each train so updates are savegame-compatible.
 
-1: DSB Class MF
+0: DSB Class MZ (IV)
+1: DSB Class MF (IC3)
 2: DSB Class ER
 3: SJ Class X2
 4: DSB Class MA
 5: DSB Class ET
+6: DSB Class MF (IC2)
+7: DSB Class MZ (II)
 
 */
 

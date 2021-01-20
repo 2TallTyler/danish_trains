@@ -31,6 +31,7 @@ STR_NAME_ET							:DSB Class ET (Electric)
 STR_NAME_MA							:DSB Class MA (Diesel)
 STR_NAME_MF							:DSB Class MF / IC3 (Diesel)
 STR_NAME_MF_IC2						:DSB Class MF / IC2 (Diesel)
+STR_NAME_MZ_II						:DSB Class MZ II (Diesel)
 STR_NAME_MZ_IV						:DSB Class MZ IV (Diesel)
 
 STR_NAME_X2000						:SJ Class X2 (Electric)

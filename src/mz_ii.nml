@@ -1,0 +1,74 @@
+
+/* Begin MZ (II) */
+
+/* GRAPHICS */
+spriteset(spriteset_mz_ii_1, "src\gfx\mz_ii_1_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_ii_2, "src\gfx\mz_ii_2_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mz_ii_headlights, "src\gfx\mz_headlights.png") {template_8_standard(0,0)}
+
+
+/* SWITCHES */
+
+switch (FEAT_TRAINS, SELF, sw_mz_ii_livery_date, date_of_last_service) {
+	0..date(1984, 1, 1): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mz_ii_livery_type, param_livery_selection) {
+	0: sw_mz_ii_livery_date;
+	return cargo_subtype;
+}
+
+/* Livery selection */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_livery, sw_mz_ii_livery_type()) {
+	0: spriteset_mz_ii_1;
+	1: spriteset_mz_ii_2;
+}
+
+/* Headlight sprite stacker.  */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mz_ii_livery;    // Return the base sprite
+    1: return spriteset_mz_ii_headlights;    // Return the overlay
+}
+
+/* If this loco is leading the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_position, position_in_consist) {
+	0: return sw_mz_ii_with_headlights;
+	return sw_mz_ii_livery;
+}
+
+item(FEAT_TRAINS, item_mz_ii, 7) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MZ_II);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1970,01,01);
+		model_life:	40; // retired in 2008
+		vehicle_life: 40;
+		reliability_decay: 20;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 143 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
+		track_type:	RAIL;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_DIESEL;
+		power: 3300 hp;
+		weight: 117 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_mz_ii_position;
+		colour_mapping: sw_cc_red_cream;
+		cost_factor: 86;
+		running_cost_factor: func_running_costs(3704);
+		purchase_running_cost_factor: 3704;
+		additional_text: string(STR_ROLE_PASS_FREIGHT);
+	}
+}
+
+/* End MZ (II) */
