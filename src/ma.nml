@@ -1,9 +1,5 @@
 
-/* Begin MF */
-
-/*
-*	Note: Class MF consist is ma-FF-am.
-*/
+/* Begin MA */
 
 /* GRAPHICS */
 
@@ -304,4 +300,4 @@ item(FEAT_TRAINS, item_ma, 4) {
 	}
 }
 
-/* End MF */
+/* End MA */
