@@ -19,7 +19,7 @@ switch (FEAT_TRAINS, SELF, sw_cc_red_cream, param_company_colours) {
 }
 
 switch (FEAT_TRAINS, SELF, sw_cc_red_mauve, param_company_colours) {
-	0: return palette_2cc(COLOUR_RED, COLOUR_MAUVE);
+	0: return palette_2cc(COLOUR_RED, COLOUR_PURPLE);
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
