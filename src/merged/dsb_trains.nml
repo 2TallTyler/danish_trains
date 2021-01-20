@@ -675,11 +675,7 @@ item(FEAT_TRAINS, item_et, 5) {
 /* End ET */
 
 
-/* Begin MF */
-
-/*
-*	Note: Class MF consist is ma-FF-am.
-*/
+/* Begin MA */
 
 /* GRAPHICS */
 
@@ -980,7 +976,7 @@ item(FEAT_TRAINS, item_ma, 4) {
 	}
 }
 
-/* End MF */
+/* End MA */
 
 
 /* Begin MF */
