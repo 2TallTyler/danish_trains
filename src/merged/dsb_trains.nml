@@ -45,6 +45,9 @@ cargotable {
 	PASS
 }
 
+/* Disable all base game trains. */
+disable_item(FEAT_TRAINS);
+
 /*
 Base costs are tweaked to balance vehicle purchase and running costs using a strategy developed by Andythenorth in his excellent Iron Horse 2 train set. 
 This requires changing base costs to give greater range and control, and allow me to borrow values directly from the Iron Horse code reference. Thanks, Andy! :)
@@ -60,8 +63,9 @@ basecost {
 	PR_RUNNING_TRAIN_DIESEL: -4;
 }
 
-/*
-Vehicle ID reference. These are set manually for each train so updates are savegame-compatible.
+/* Sort vehicles in the purchase menu.
+
+Vehicle IDs are set manually for each train so updates are savegame-compatible.
 
 0: DSB Class MZ (IV)
 1: DSB Class MF (IC3)
@@ -73,6 +77,35 @@ Vehicle ID reference. These are set manually for each train so updates are saveg
 7: DSB Class MZ (II)
 
 */
+
+sort(FEAT_TRAINS, [
+/* Copenhagen S-Train */
+
+/* Locomotives */
+	/* Passenger Locomotives */
+	
+	/* Mixed traffic locomotives */
+		/* Diesel */
+		7, // DSB Class MZ (II) - 1970, 143 km/h
+		0, // DSB Class MZ (IV) - 1977, 166 km/h
+	
+	/* Freight Locomotives */
+
+/* Multiple units */
+	/* Regional */
+		/* Diesel */
+		6, // DSB Class MF (IC2) - 1992, 180 km/h
+		1, // DSB Class MF (IC3) - 1989, 180 km/h
+		
+		/* Electric */
+		2, // DSB Class ER - 1993, 180 km/h
+		5, // DSB Class ET - 2000, 180 km/h
+	
+	/* Express Passenger */
+	4, // DSB Class MA - 1963, 160 km/h
+	3, // SJ Class X2 - 1990, 210 km/h
+
+]);
 
 /* *** End Header *** */
 
@@ -1454,7 +1487,7 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		reliability_decay: 20;
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
-		speed: 103 mph;
+		speed: 166 km/h;
 		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
 		track_type:	RAIL;
 		running_cost_base: RUNNING_COST_STEAM;
