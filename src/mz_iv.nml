@@ -31,7 +31,7 @@ item(FEAT_TRAINS, item_mz_iv, 0) {
 		reliability_decay: 20;
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
-		speed: 103 mph;
+		speed: 166 km/h;
 		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
 		track_type:	RAIL;
 		running_cost_base: RUNNING_COST_STEAM;
