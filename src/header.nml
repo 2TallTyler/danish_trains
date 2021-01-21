@@ -75,6 +75,7 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 5: DSB Class ET
 6: DSB Class MF (IC2)
 7: DSB Class MZ (II)
+8: DSB Class MY (II)
 
 */
 
@@ -86,6 +87,7 @@ sort(FEAT_TRAINS, [
 	
 	/* Mixed traffic locomotives */
 		/* Diesel */
+		8, // DSB Class MY (II) - 1954, 133 km/h
 		7, // DSB Class MZ (II) - 1970, 143 km/h
 		0, // DSB Class MZ (IV) - 1977, 166 km/h
 	

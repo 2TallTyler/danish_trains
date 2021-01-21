@@ -19,6 +19,8 @@ STR_ROLE_PASS_FREIGHT				:Role: {GOLD}Passenger or Freight
 STR_ROLE_PASS						:Role: {GOLD}Passenger
 STR_ROLE_EXPRESS_PASS				:Role: {GOLD}Express Passenger
 
+STR_LIVERY_BROWN					: (brown)
+STR_LIVERY_BLUE_YELLOW				: (blue and yellow)
 STR_LIVERY_GREY						: (grey)
 STR_LIVERY_GREY_BLUE				: (grey and blue)
 STR_LIVERY_GREY_RED					: (grey and red)
@@ -31,6 +33,7 @@ STR_NAME_ET							:DSB Class ET (Electric)
 STR_NAME_MA							:DSB Class MA (Diesel)
 STR_NAME_MF							:DSB Class MF / IC3 (Diesel)
 STR_NAME_MF_IC2						:DSB Class MF / IC2 (Diesel)
+STR_NAME_MY_II						:DSB Class MY II (Diesel)
 STR_NAME_MZ_II						:DSB Class MZ II (Diesel)
 STR_NAME_MZ_IV						:DSB Class MZ IV (Diesel)
 

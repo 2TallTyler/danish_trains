@@ -23,6 +23,11 @@ switch (FEAT_TRAINS, SELF, sw_cc_red_mauve, param_company_colours) {
 	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
 }
 
+switch (FEAT_TRAINS, SELF, sw_cc_dark_blue_yellow, param_company_colours) {
+	0: return palette_2cc(COLOUR_DARK_BLUE, COLOUR_YELLOW);
+	1: return base_sprite_2cc + CB_RESULT_COLOUR_MAPPING_ADD_CC;
+}
+
 /* SJ */
 switch (FEAT_TRAINS, SELF, sw_cc_blue_white, param_company_colours) {
 	0: return palette_2cc(COLOUR_BLUE, COLOUR_WHITE);
