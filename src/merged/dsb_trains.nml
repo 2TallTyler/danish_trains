@@ -76,6 +76,7 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 6: DSB Class MF (IC2)
 7: DSB Class MZ (II)
 8: DSB Class MY (II)
+9: DSB Class MX (II)
 
 */
 
@@ -87,6 +88,7 @@ sort(FEAT_TRAINS, [
 	
 	/* Mixed traffic locomotives */
 		/* Diesel */
+		9, // DSB Class MX (II) - 1960, 133 km/h
 		8, // DSB Class MY (II) - 1954, 133 km/h
 		7, // DSB Class MZ (II) - 1970, 143 km/h
 		0, // DSB Class MZ (IV) - 1977, 166 km/h
@@ -1381,6 +1383,97 @@ item(FEAT_TRAINS, item_ic2, 6) {
 }
 
 /* End MF / ic2 */
+
+
+/* Begin MY (II) */
+
+/* GRAPHICS */
+spriteset(spriteset_mx_ii_1, "src\gfx\mx_ii_1_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mx_ii_2, "src\gfx\mx_ii_2_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mx_ii_headlights, "src\gfx\my_headlights.png") {template_8_standard(0,0)}
+
+
+/* SWITCHES */
+
+switch (FEAT_TRAINS, SELF, sw_mx_ii_livery_date, date_of_last_service) {
+	0..date(1978, 1, 1): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mx_ii_livery_type, param_livery_selection) {
+	0: sw_mx_ii_livery_date;
+	return cargo_subtype;
+}
+
+/* Livery selection */
+switch (FEAT_TRAINS, SELF, sw_mx_ii_livery, sw_mx_ii_livery_type()) {
+	0: spriteset_mx_ii_1;
+	1: spriteset_mx_ii_2;
+}
+
+/* Headlight sprite stacker.  */
+switch (FEAT_TRAINS, SELF, sw_mx_ii_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mx_ii_livery;    // Return the base sprite
+    1: return spriteset_mx_ii_headlights;    // Return the overlay
+}
+
+/* If this loco is leading the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mx_ii_position, position_in_consist) {
+	0: return sw_mx_ii_with_headlights;
+	return sw_mx_ii_livery;
+}
+
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_mx_ii_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_BROWN);
+	1: return string(STR_LIVERY_RED_BLACK);
+}
+
+switch (FEAT_TRAINS, SELF, sw_mx_ii_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_mx_ii_cargo_subtype_text;
+}
+
+item(FEAT_TRAINS, item_mx_ii, 9) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MX_II);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1960,01,01);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 1;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 133 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_SPRITE_STACK);
+		track_type:	RAIL;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_DIESEL;
+		power: 1445 hp;
+		weight: 89 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_mx_ii_position;
+		colour_mapping: sw_cc_red_cream;
+		cargo_subtype_text: sw_mx_ii_cargo_subtype;
+		cost_factor: 46;
+		running_cost_factor: func_running_costs(1921);
+		purchase_running_cost_factor: 1921;
+		additional_text: string(STR_ROLE_PASS_FREIGHT);
+		cargo_capacity: 0;
+	}
+}
+
+/* End MY (II) */
 
 
 /* Begin MY (II) */
