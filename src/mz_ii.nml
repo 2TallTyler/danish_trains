@@ -40,6 +40,17 @@ switch (FEAT_TRAINS, SELF, sw_mz_ii_position, position_in_consist) {
 	return sw_mz_ii_livery;
 }
 
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_mz_ii_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_BROWN);
+	1: return string(STR_LIVERY_RED_BLACK);
+}
+
+switch (FEAT_TRAINS, SELF, sw_mz_ii_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_mz_ii_cargo_subtype_text;
+}
+
 item(FEAT_TRAINS, item_mz_ii, 7) {
 	property {
 		/* Common properties */
@@ -49,6 +60,9 @@ item(FEAT_TRAINS, item_mz_ii, 7) {
 		model_life:	40; // retired in 2008
 		vehicle_life: 40;
 		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 1;
 		/* Train-specific properties */
 		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
 		speed: 143 km/h;
@@ -64,10 +78,12 @@ item(FEAT_TRAINS, item_mz_ii, 7) {
 	graphics {
 		default: sw_mz_ii_position;
 		colour_mapping: sw_cc_red_cream;
+		cargo_subtype_text: sw_mz_ii_cargo_subtype;
 		cost_factor: 86;
 		running_cost_factor: func_running_costs(3704);
 		purchase_running_cost_factor: 3704;
 		additional_text: string(STR_ROLE_PASS_FREIGHT);
+		cargo_capacity: 0;
 	}
 }
 

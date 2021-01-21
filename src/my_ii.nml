@@ -93,6 +93,7 @@ item(FEAT_TRAINS, item_my_ii, 8) {
 		running_cost_factor: func_running_costs(2167);
 		purchase_running_cost_factor: 2167;
 		additional_text: string(STR_ROLE_PASS_FREIGHT);
+		cargo_capacity: 0;
 	}
 }
 
