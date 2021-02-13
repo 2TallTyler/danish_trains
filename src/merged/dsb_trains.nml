@@ -1417,7 +1417,7 @@ spriteset(spriteset_mr_3_mr_reversed, "src\gfx\mr_3_mr_8bpp.png") {template_8_re
 
 switch (FEAT_TRAINS, SELF, sw_mr_livery_date, date_of_last_service) {
 	0..date(1995, 1, 1): return 0;
-	date(2005, 1, 2)..date(2018, 1, 1): return 1;
+	date(1995, 1, 2)..date(2005, 1, 1): return 1;
 	return 2;
 }
 
