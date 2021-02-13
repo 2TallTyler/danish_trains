@@ -57,7 +57,7 @@ Unlike other base cost overrides, changing vehicle base costs only affects vehic
 */
 
 basecost {
-	PR_BUILD_VEHICLE_TRAIN: -2;
+	PR_BUILD_VEHICLE_TRAIN: -1;
 	PR_BUILD_VEHICLE_WAGON: 1;
 	PR_RUNNING_TRAIN_STEAM: -3;
 	PR_RUNNING_TRAIN_DIESEL: -4;
