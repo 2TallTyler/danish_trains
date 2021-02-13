@@ -4,7 +4,7 @@ grf {
 	grfid: "TT14";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESC);
-	version: 11;
+	version: 12;
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
@@ -77,6 +77,7 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 7: DSB Class MZ (II)
 8: DSB Class MY (II)
 9: DSB Class MX (II)
+10: DSB Class MR
 
 */
 
@@ -98,6 +99,7 @@ sort(FEAT_TRAINS, [
 /* Multiple units */
 	/* Regional */
 		/* Diesel */
+		10, // DSB Class MR - 1978, 120 km/h
 		6, // DSB Class MF (IC2) - 1992, 180 km/h
 		1, // DSB Class MF (IC3) - 1989, 180 km/h
 		

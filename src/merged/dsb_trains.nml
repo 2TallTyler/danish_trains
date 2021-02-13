@@ -4,7 +4,7 @@ grf {
 	grfid: "TT14";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESC);
-	version: 11;
+	version: 12;
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
@@ -77,6 +77,7 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 7: DSB Class MZ (II)
 8: DSB Class MY (II)
 9: DSB Class MX (II)
+10: DSB Class MR
 
 */
 
@@ -98,6 +99,7 @@ sort(FEAT_TRAINS, [
 /* Multiple units */
 	/* Regional */
 		/* Diesel */
+		10, // DSB Class MR - 1978, 120 km/h
 		6, // DSB Class MF (IC2) - 1992, 180 km/h
 		1, // DSB Class MF (IC3) - 1989, 180 km/h
 		
@@ -1383,6 +1385,214 @@ item(FEAT_TRAINS, item_ic2, 6) {
 }
 
 /* End MF / ic2 */
+
+
+/* Begin MR */
+
+/*
+*	Note: Class MR consist is MR-MRD.
+*/
+
+/* GRAPHICS */
+
+/* Lights */
+spriteset(spriteset_mr_headlights, "src\gfx\mr_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_mr_marker_lights, "src\gfx\mr_marker_lights.png") {template_8_reversed(0,0)}
+
+/* White and red */
+spriteset(spriteset_mr_1_mr, "src\gfx\mr_1_mr_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mr_1_mr_reversed, "src\gfx\mr_1_mr_8bpp.png") {template_8_reversed(0,0)}
+
+/* Grey and blue */
+spriteset(spriteset_mr_2_mr, "src\gfx\mr_2_mr_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mr_2_mr_reversed, "src\gfx\mr_2_mr_8bpp.png") {template_8_reversed(0,0)}
+
+/* Red and black */
+spriteset(spriteset_mr_3_mr, "src\gfx\mr_3_mr_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_mr_3_mr_reversed, "src\gfx\mr_3_mr_8bpp.png") {template_8_reversed(0,0)}
+
+/* SWITCHES */
+
+/* Select livery type */
+
+switch (FEAT_TRAINS, SELF, sw_mr_livery_date, date_of_last_service) {
+	0..date(1995, 1, 1): return 0;
+	date(2005, 1, 2)..date(2018, 1, 1): return 1;
+	return 2;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mr_livery_type, param_livery_selection) {
+	0: sw_mr_livery_date;
+	return cargo_subtype;
+}
+
+/* Select the right livery for each sprite */
+
+/* Livery selection for MR */
+switch (FEAT_TRAINS, SELF, sw_mr_livery_mr, sw_mr_livery_type()) {
+	0: spriteset_mr_1_mr;
+	1: spriteset_mr_2_mr;
+	2: spriteset_mr_3_mr;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mr_livery_mr_reversed, sw_mr_livery_type()) {
+	0: spriteset_mr_1_mr_reversed;
+	1: spriteset_mr_2_mr_reversed;
+	2: spriteset_mr_3_mr_reversed;
+}
+
+/* Livery selection for MRD */
+switch (FEAT_TRAINS, SELF, sw_mr_livery_mrd, sw_mr_livery_type()) {
+	0: spriteset_mr_1_mr_reversed;
+	1: spriteset_mr_2_mr_reversed;
+	2: spriteset_mr_3_mr_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_mr_livery_mrd_reversed, sw_mr_livery_type()) {
+	0: spriteset_mr_1_mr;
+	1: spriteset_mr_2_mr;
+	2: spriteset_mr_3_mr;
+}
+
+/* First car of vehicle is an MR. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mr_mr_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mr_livery_mr;    // Return the base sprite
+    1: return spriteset_mr_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an MR. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mr_mr_position, position_in_consist) {
+	0: return sw_mr_mr_with_headlights;
+	return sw_mr_livery_mr;
+}
+
+/* Sprite stack for MR with marker lights */
+switch (FEAT_TRAINS, SELF, sw_mr_mr_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mr_livery_mr_reversed;    // Return the base sprite
+    1: return spriteset_mr_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an MR. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_mr_mr_reversed_position, position_in_consist_from_end) {
+	0: return sw_mr_mr_with_marker_lights;
+	return sw_mr_livery_mr_reversed;
+}
+
+/* Sprite stack for MRD with headlights */
+switch (FEAT_TRAINS, SELF, sw_mr_mrd_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mr_livery_mrd_reversed;    // Return the base sprite
+    1: return spriteset_mr_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an MRD. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_mr_mrd_reversed_position, position_in_consist) {
+	0: return sw_mr_mrd_with_headlights;
+	return sw_mr_livery_mrd_reversed;
+}
+
+/* Sprite stack for MRD with marker lights */
+switch (FEAT_TRAINS, SELF, sw_mr_mrd_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return sw_mr_livery_mrd;    // Return the base sprite
+    1: return spriteset_mr_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an MRD. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_mr_mrd_position, position_in_consist_from_end) {
+	0: return sw_mr_mrd_with_marker_lights;
+	return sw_mr_livery_mrd;
+}
+
+/* Car 0 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_mr_reverser_0, vehicle_is_reversed) {
+	0: sw_mr_mr_position;
+	sw_mr_mrd_reversed_position;
+}
+
+/* Car 2 check reversed */
+switch (FEAT_TRAINS, PARENT, sw_mr_reverser_1, vehicle_is_reversed) {
+	0: sw_mr_mrd_position;
+	sw_mr_mr_reversed_position;
+}
+
+/* Select the correct part of the train */
+switch (FEAT_TRAINS, SELF, sw_mr_graphics, position_in_articulated_veh) {
+	0: sw_mr_reverser_0; // Car 0 (first)
+	1: sw_mr_reverser_1; // Car 1 (last)
+}
+
+/* Assemble a 2-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_mr_articulated_part, extra_callback_info1) {
+	1: return item_mr;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+/* Create livery refits with cargo_subtypes */
+switch (FEAT_TRAINS, SELF, sw_mr_cargo_subtype_text, cargo_subtype) {
+	0: return string(STR_LIVERY_RED);
+	1: return string(STR_LIVERY_WHITE_RED);
+	2: return string(STR_LIVERY_GREY_BLUE);
+}
+
+switch (FEAT_TRAINS, SELF, sw_mr_cargo_subtype, param_livery_selection) {
+	0: return CB_RESULT_NO_TEXT;
+	return sw_mr_cargo_subtype_text;
+}
+
+/* ITEM*/
+
+item(FEAT_TRAINS, item_mr, 10) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_MR);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1978,01,01);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 56;
+		loading_speed: 6;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 120 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_SPRITE_STACK);
+		refit_cost: 0;
+		track_type:	RAIL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_DIESEL;
+		power: 474 kW;
+		weight: 70 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_mr_graphics;
+		purchase: sw_mr_livery_mr;
+		colour_mapping: sw_cc_red;
+		articulated_part: sw_mr_articulated_part;
+		cargo_subtype_text: sw_mr_cargo_subtype;
+		cost_factor: 48;
+		running_cost_factor: func_running_costs(609);
+		purchase_running_cost_factor: 609;
+		additional_text: string(STR_ROLE_PASS);
+	}
+}
+
+/* End MR */
 
 
 /* Begin MY (II) */
