@@ -4,7 +4,7 @@ grf {
 	grfid: "TT14";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESC);
-	version: 12;
+	version: 13;
 	min_compatible_version: 0;
 
 	url: string(STR_WEBSITE);
@@ -78,6 +78,9 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 8: DSB Class MY (II)
 9: DSB Class MX (II)
 10: DSB Class MR
+11: Skipped (DMU)
+12: Skipped (DMU)
+13: DSB S-Tog 1
 
 */
 
@@ -110,7 +113,9 @@ sort(FEAT_TRAINS, [
 	/* Express Passenger */
 	4, // DSB Class MA - 1963, 160 km/h
 	3, // SJ Class X2 - 1990, 210 km/h
-
+	
+	/* Copenhagen S-Tog trains */
+	13, //S-Tog 1
 ]);
 
 /* *** End Header *** */

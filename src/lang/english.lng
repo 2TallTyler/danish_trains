@@ -40,4 +40,6 @@ STR_NAME_MY_II						:DSB MY 2 (Diesel)
 STR_NAME_MZ_II						:DSB MZ 2 (Diesel)
 STR_NAME_MZ_IV						:DSB MZ 4 (Diesel)
 
+STR_NAME_STOG_1						:S-Train 1 (Electric)
+
 STR_NAME_X2000						:SJ X2 (Electric)
