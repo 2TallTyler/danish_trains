@@ -81,12 +81,11 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 11: Skipped (DMU)
 12: Skipped (DMU)
 13: DSB S-Tog 1
+14: DSB S-Tog 2
 
 */
 
 sort(FEAT_TRAINS, [
-/* Copenhagen S-Train */
-
 /* Locomotives */
 	/* Passenger Locomotives */
 	
@@ -115,7 +114,8 @@ sort(FEAT_TRAINS, [
 	3, // SJ Class X2 - 1990, 210 km/h
 	
 	/* Copenhagen S-Tog trains */
-	13, //S-Tog 1
+	13, // S-Tog 1
+	14, // S-Tog 2
 ]);
 
 /* *** End Header *** */
