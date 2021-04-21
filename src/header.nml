@@ -82,6 +82,8 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 12: Skipped (DMU)
 13: DSB S-Tog 1
 14: DSB S-Tog 2
+15: DSB S-Tog 3
+16: DSB S-Tog 4
 
 */
 
@@ -116,6 +118,7 @@ sort(FEAT_TRAINS, [
 	/* Copenhagen S-Tog trains */
 	13, // S-Tog 1
 	14, // S-Tog 2
+	15, // S-Tog 3
 ]);
 
 /* *** End Header *** */

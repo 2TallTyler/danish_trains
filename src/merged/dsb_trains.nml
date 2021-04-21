@@ -82,6 +82,8 @@ Vehicle IDs are set manually for each train so updates are savegame-compatible.
 12: Skipped (DMU)
 13: DSB S-Tog 1
 14: DSB S-Tog 2
+15: DSB S-Tog 3
+16: DSB S-Tog 4
 
 */
 
@@ -116,6 +118,7 @@ sort(FEAT_TRAINS, [
 	/* Copenhagen S-Tog trains */
 	13, // S-Tog 1
 	14, // S-Tog 2
+	15, // S-Tog 3
 ]);
 
 /* *** End Header *** */
@@ -2264,6 +2267,116 @@ item(FEAT_TRAINS, item_stog_2, 14) {
 }
 
 /* End S-Tog 2 */
+
+
+/* Begin S-Tog 3 */
+
+/* GRAPHICS */
+
+/* Lights */
+spriteset(spriteset_stog_3_headlights, "src\gfx\stog_3_headlights.png") {template_8_standard(0,0)}
+spriteset(spriteset_stog_3_marker_lights, "src\gfx\stog_3_marker_lights.png") {template_8_reversed(0,0)}
+
+spriteset(spriteset_stog_3_mc, "src\gfx\stog_3_mc_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_stog_3_mc_reversed, "src\gfx\stog_3_mc_8bpp.png") {template_8_reversed(0,0)}
+
+spriteset(spriteset_stog_3_fc, "src\gfx\stog_3_fc_8bpp.png") {template_8_standard(0,0)}
+spriteset(spriteset_stog_3_fc_reversed, "src\gfx\stog_3_fc_8bpp.png") {template_8_reversed(0,0)}
+
+/* SWITCHES */
+
+/* Sprite stack for stog_3_fc with headlights */
+switch (FEAT_TRAINS, SELF, sw_stog_3_fc_with_headlights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_stog_3_fc;    // Return the base sprite
+    1: return spriteset_stog_3_headlights;    // Return the overlay
+}
+
+/* First car of vehicle is an stog_3_fc. If it is the first car of the train, display headlights.  */
+switch (FEAT_TRAINS, SELF, sw_stog_3_fc_position, position_in_consist) {
+	0: return sw_stog_3_fc_with_headlights;
+	return spriteset_stog_3_fc;
+}
+
+/* Sprite stack for stog_3_fc with marker lights */
+switch (FEAT_TRAINS, SELF, sw_stog_3_fc_with_marker_lights, [
+    STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
+    getbits(extra_callback_info1, 8, 8)
+    ]) {
+    0: return spriteset_stog_3_fc_reversed;    // Return the base sprite
+    1: return spriteset_stog_3_marker_lights;    // Return the overlay
+}
+
+/* Last car of vehicle is an stog_3_fc. If it is the last car of the train, display marker lights.  */
+switch (FEAT_TRAINS, SELF, sw_stog_3_fc_reversed_position, position_in_consist_from_end) {
+	0: return sw_stog_3_fc_with_marker_lights;
+	return spriteset_stog_3_fc_reversed;
+}
+
+/* Select the correct part of the train. */
+switch (FEAT_TRAINS, SELF, sw_stog_3_graphics, position_in_articulated_veh) {
+	0: sw_stog_3_fc_position;
+	1: spriteset_stog_3_mc;
+	2: spriteset_stog_3_mc_reversed;
+	3: sw_stog_3_fc_reversed_position;
+}
+
+/* Assemble a 4-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_stog_3_articulated_part, extra_callback_info1) {
+	1..3: return item_stog_3;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_3_visual_effect_and_powered, 
+(position_in_articulated_veh == 1) || (position_in_articulated_veh == 2)) {
+	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
+	return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
+/* ITEM*/
+
+item(FEAT_TRAINS, item_stog_3, 15) {
+	property {
+		/* Common properties */
+		name: string(STR_NAME_STOG_3);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1979, 01, 01);
+		model_life:	40;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		default_cargo_type: PASS;
+		cargo_capacity: 64;
+		loading_speed: 10;
+		/* Train-specific properties */
+		sprite_id: SPRITE_ID_NEW_TRAIN; //enable new graphics
+		speed: 120 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+		refit_cost: 0;
+		track_type:	ELRL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_ELECTRIC;
+		power: 800 kW;
+		weight: 240 ton;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+	}
+	graphics {
+		default: sw_stog_3_graphics;
+		purchase: spriteset_stog_3_fc;
+		colour_mapping: sw_cc_red_red;
+		articulated_part: sw_stog_3_articulated_part;
+		cost_factor: 36;
+		running_cost_factor: func_running_costs(1403);
+		purchase_running_cost_factor: 1403;
+		visual_effect_and_powered: sw_stog_3_visual_effect_and_powered;
+	}
+}
+
+/* End S-Tog 3 */
 
 
 /* Begin X2000*/
