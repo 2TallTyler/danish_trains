@@ -167,6 +167,7 @@ item(FEAT_TRAINS, item_stog_1, 13) {
 		running_cost_factor: func_running_costs(1403);
 		purchase_running_cost_factor: 1403;
 		visual_effect_and_powered: sw_stog_1_visual_effect_and_powered;
+		additional_text: string(STR_ROLE_URBAN_PASS);
 	}
 }
 
