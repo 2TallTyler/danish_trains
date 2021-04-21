@@ -99,9 +99,9 @@ item(FEAT_TRAINS, item_stog_3, 15) {
 		purchase: spriteset_stog_3_fc;
 		colour_mapping: sw_cc_red_red;
 		articulated_part: sw_stog_3_articulated_part;
-		cost_factor: 36;
-		running_cost_factor: func_running_costs(1403);
-		purchase_running_cost_factor: 1403;
+		cost_factor: 120;
+		running_cost_factor: func_running_costs(4000);
+		purchase_running_cost_factor: 4000;
 		visual_effect_and_powered: sw_stog_3_visual_effect_and_powered;
 	}
 }
