@@ -3,9 +3,9 @@
 #################################
 
 # Name of NewGRF, as it appears in file names
-vehicle_name = "stog_3_mc"
+vehicle_name = "stog_4_sb"
 
-vehicle_manifest = "8_standard"
+vehicle_manifest = "4_standard"
 
 #################################
 # NO NEED TO CHANGE STUFF BELOW #

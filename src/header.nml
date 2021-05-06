@@ -119,6 +119,7 @@ sort(FEAT_TRAINS, [
 	13, // S-Tog 1
 	14, // S-Tog 2
 	15, // S-Tog 3
+	16, // S-Tog 4
 ]);
 
 /* *** End Header *** */
