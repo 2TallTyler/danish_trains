@@ -1,5 +1,5 @@
 
-/* Begin S-Tog 3 */
+/* Begin S-Tog 4 */
 
 /* GRAPHICS */
 
@@ -18,7 +18,7 @@ spriteset(spriteset_stog_4_sc_reversed, "src\gfx\stog_4_sc_8bpp.png") {template_
 
 /* SWITCHES */
 
-/* Sprite stack for stog_4_fc with headlights */
+/* Sprite stack for stog_4_se with headlights */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_with_headlights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
@@ -27,13 +27,13 @@ switch (FEAT_TRAINS, SELF, sw_stog_4_se_with_headlights, [
     1: return spriteset_stog_4_headlights;
 }
 
-/* First car of vehicle is an stog_4_fc. If it is the first car of the train, display headlights.  */
+/* First car of vehicle is an stog_4_se. If it is the first car of the train, display headlights.  */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_position, position_in_consist) {
 	0: return sw_stog_4_se_with_headlights;
 	return spriteset_stog_4_se;
 }
 
-/* Sprite stack for stog_4_fc with marker lights */
+/* Sprite stack for stog_4_se with marker lights */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_with_marker_lights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
@@ -42,7 +42,7 @@ switch (FEAT_TRAINS, SELF, sw_stog_4_se_with_marker_lights, [
     1: return spriteset_stog_4_marker_lights;
 }
 
-/* Last car of vehicle is an stog_4_fc. If it is the last car of the train, display marker lights.  */
+/* Last car of vehicle is an stog_4_se. If it is the last car of the train, display marker lights.  */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_reversed_position, position_in_consist_from_end) {
 	0: return sw_stog_4_se_with_marker_lights;
 	return spriteset_stog_4_se_reversed;
@@ -136,4 +136,4 @@ item(FEAT_TRAINS, item_stog_4, 16) {
 	}
 }
 
-/* End S-Tog 3 */
+/* End S-Tog 4 */
