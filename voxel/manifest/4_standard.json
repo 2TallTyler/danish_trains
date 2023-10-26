@@ -6,10 +6,10 @@
   "soften_edges": 1.5,
   "alpha_edge_threshold": 0.75,
   "sampler": "square",
-  "accuracy": 7,
+  "accuracy": 5,
   "brightness": -0.05,
   "contrast": 0.2,
-  "overlap": 0.05,
+  "overlap": 0.04,
   "size": {
     "x": 68,
     "y": 42,

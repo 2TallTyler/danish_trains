@@ -7,30 +7,79 @@
 spriteset(spriteset_stog_4_headlights, "src\gfx\stog_4_headlights.png") {template_4_standard(0,0)}
 spriteset(spriteset_stog_4_marker_lights, "src\gfx\stog_4_marker_lights.png") {template_4_reversed(0,0)}
 
+/* Original livery */
 spriteset(spriteset_stog_4_se, "src\gfx\stog_4_se_8bpp.png") {template_4_standard(0,0)}
 spriteset(spriteset_stog_4_se_reversed, "src\gfx\stog_4_se_8bpp.png") {template_4_reversed(0,0)}
-
 spriteset(spriteset_stog_4_sb, "src\gfx\stog_4_sb_8bpp.png") {template_4_standard(0,0)}
 spriteset(spriteset_stog_4_sb_reversed, "src\gfx\stog_4_sb_8bpp.png") {template_4_reversed(0,0)}
-
 spriteset(spriteset_stog_4_sc, "src\gfx\stog_4_sc_8bpp.png") {template_4_standard(0,0)}
 spriteset(spriteset_stog_4_sc_reversed, "src\gfx\stog_4_sc_8bpp.png") {template_4_reversed(0,0)}
 
+/* New (2018-) Livery */
+spriteset(spriteset_stog_4_se_new, "src\gfx\stog_4_se_new_8bpp.png") {template_4_standard(0,0)}
+spriteset(spriteset_stog_4_se_new_reversed, "src\gfx\stog_4_se_new_8bpp.png") {template_4_reversed(0,0)}
+spriteset(spriteset_stog_4_sb_new, "src\gfx\stog_4_sb_new_8bpp.png") {template_4_standard(0,0)}
+spriteset(spriteset_stog_4_sb_new_reversed, "src\gfx\stog_4_sb_new_8bpp.png") {template_4_reversed(0,0)}
+spriteset(spriteset_stog_4_sc_new, "src\gfx\stog_4_sc_new_8bpp.png") {template_4_standard(0,0)}
+spriteset(spriteset_stog_4_sc_new_reversed, "src\gfx\stog_4_sc_new_8bpp.png") {template_4_reversed(0,0)}
+
 /* SWITCHES */
+
+/* Select livery type */
+switch (FEAT_TRAINS, SELF, sw_stog_4_livery_date, date_of_last_service) {
+	0..date(2018, 7, 4): return 0;
+	return 1;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_4_livery_type, param_livery_selection) {
+	0: sw_stog_4_livery_date;
+	return cargo_subtype;
+}
+
+/* Livery selection */
+switch (FEAT_TRAINS, SELF, sw_stog_4_se, sw_stog_4_livery_type()) {
+	0: spriteset_stog_4_se;
+	1: spriteset_stog_4_se_new;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_4_se_reversed, sw_stog_4_livery_type()) {
+	0: spriteset_stog_4_se_reversed;
+	1: spriteset_stog_4_se_new_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_4_sb, sw_stog_4_livery_type()) {
+	0: spriteset_stog_4_sb;
+	1: spriteset_stog_4_sb_new;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_4_sb_reversed, sw_stog_4_livery_type()) {
+	0: spriteset_stog_4_sb_reversed;
+	1: spriteset_stog_4_sb_new_reversed;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_4_sc, sw_stog_4_livery_type()) {
+	0: spriteset_stog_4_sc;
+	1: spriteset_stog_4_sc_new;
+}
+
+switch (FEAT_TRAINS, SELF, sw_stog_4_sc_reversed, sw_stog_4_livery_type()) {
+	0: spriteset_stog_4_sc_reversed;
+	1: spriteset_stog_4_sc_new_reversed;
+}
 
 /* Sprite stack for stog_4_se with headlights */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_with_headlights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
     ]) {
-    0: return spriteset_stog_4_se;
+    0: return sw_stog_4_se;
     1: return spriteset_stog_4_headlights;
 }
 
 /* First car of vehicle is an stog_4_se. If it is the first car of the train, display headlights.  */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_position, position_in_consist) {
 	0: return sw_stog_4_se_with_headlights;
-	return spriteset_stog_4_se;
+	return sw_stog_4_se;
 }
 
 /* Sprite stack for stog_4_se with marker lights */
@@ -38,34 +87,34 @@ switch (FEAT_TRAINS, SELF, sw_stog_4_se_with_marker_lights, [
     STORE_TEMP((getbits(extra_callback_info1, 8, 8) < 1 ? CB_FLAG_MORE_SPRITES : 0) | PALETTE_USE_DEFAULT, 0x100),
     getbits(extra_callback_info1, 8, 8)
     ]) {
-    0: return spriteset_stog_4_se_reversed;
+    0: return sw_stog_4_se_reversed;
     1: return spriteset_stog_4_marker_lights;
 }
 
 /* Last car of vehicle is an stog_4_se. If it is the last car of the train, display marker lights.  */
 switch (FEAT_TRAINS, SELF, sw_stog_4_se_reversed_position, position_in_consist_from_end) {
 	0: return sw_stog_4_se_with_marker_lights;
-	return spriteset_stog_4_se_reversed;
+	return sw_stog_4_se_reversed;
 }
 
 switch (FEAT_TRAINS, PARENT, sw_stog_4_reverser_1, vehicle_is_reversed) {
-	0: spriteset_stog_4_sb;
-	spriteset_stog_4_sc_reversed;
+	0: sw_stog_4_sb;
+	sw_stog_4_sc_reversed;
 }
 
 switch (FEAT_TRAINS, PARENT, sw_stog_4_reverser_2, vehicle_is_reversed) {
-	0: spriteset_stog_4_sc;
-	spriteset_stog_4_sb_reversed;
+	0: sw_stog_4_sc;
+	sw_stog_4_sb_reversed;
 }
 
 switch (FEAT_TRAINS, SELF, sw_stog_4_graphics_a, position_in_consist % 8) {
 	0: sw_stog_4_se_position;
-	1: spriteset_stog_4_sb;
-	2: spriteset_stog_4_sc;
-	3: spriteset_stog_4_sc;
-	4: spriteset_stog_4_sc_reversed;
-	5: spriteset_stog_4_sc_reversed;
-	6: spriteset_stog_4_sb_reversed;
+	1: sw_stog_4_sb;
+	2: sw_stog_4_sc;
+	3: sw_stog_4_sc;
+	4: sw_stog_4_sc_reversed;
+	5: sw_stog_4_sc_reversed;
+	6: sw_stog_4_sb_reversed;
 	7: sw_stog_4_se_reversed_position;
 }
 
