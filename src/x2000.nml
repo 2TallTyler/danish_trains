@@ -34,54 +34,54 @@ spriteset(spriteset_x2000_2_cab_reversed, "src/gfx/x2000_2_cab_8bpp.png") {templ
 
 /* Select livery type */
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_date, date_of_last_service) {
-	0..date(2005, 1, 1): return 0;
-	return 1;
-}
+//switch (FEAT_TRAINS, SELF, sw_x2000_livery_date, date_of_last_service) {
+//	0..date(2005, 1, 1): return 0;
+//	return 1;
+//}
 
 switch (FEAT_TRAINS, SELF, sw_x2000_livery_type, param_livery_selection) {
-	0: sw_x2000_livery_date;
+//	0: sw_x2000_livery_date;
 	return cargo_subtype;
 }
 
 /* Select the right livery for each sprite */
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_loco;
 	return spriteset_x2000_2_loco;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_loco_reversed;
 	return spriteset_x2000_2_loco_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_coach;
 	return spriteset_x2000_2_coach;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_coach_reversed;
 	return spriteset_x2000_2_coach_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cafe;
 	return spriteset_x2000_2_cafe;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cafe_reversed;
 	return spriteset_x2000_2_cafe_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cab;
 	return spriteset_x2000_2_cab;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cab_reversed;
 	return spriteset_x2000_2_cab_reversed;
 }
@@ -177,18 +177,49 @@ switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_5, vehicle_is_reversed) {
 }
 
 /* Select the correct part of the train */
-switch (FEAT_TRAINS, SELF, sw_x2000_graphics, position_in_articulated_veh) {
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics_5, position_in_articulated_veh) {
 	0: sw_x2000_reverser_0; // Car 0 (first)
 	1: sw_x2000_reverser_1_4; // Car 1
 	2: sw_x2000_reverser_2;
 	3: sw_x2000_reverser_3; // Cafe
 	4: sw_x2000_reverser_1_4;
 	5: sw_x2000_reverser_5;
+	empty_sprites;
 }
 
-/* Assemble a 4-car articulated vehicle. */
+/* 6-car X2 */
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics_6, position_in_articulated_veh) {
+	0: sw_x2000_reverser_0; // Car 0 (first)
+	1: sw_x2000_reverser_1_4; // Car 1
+	2: sw_x2000_reverser_2;
+	3: sw_x2000_reverser_1_4;
+	4: sw_x2000_reverser_3;
+	5: sw_x2000_reverser_1_4;
+	6: sw_x2000_reverser_5;
+	empty_sprites;
+}
+
+/* 7-car X2 */
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics_7, position_in_articulated_veh) {
+	0: sw_x2000_reverser_0; // Car 0 (first)
+	1: sw_x2000_reverser_1_4; // Car 1
+	2: sw_x2000_reverser_1_4;
+	3: sw_x2000_reverser_2;
+	4: sw_x2000_reverser_3;
+	5: sw_x2000_reverser_1_4;
+	6: sw_x2000_reverser_1_4;
+	7: sw_x2000_reverser_5;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics, cargo_subtype) {
+	0..1: sw_x2000_graphics_5;
+	2..3: sw_x2000_graphics_6;
+	4..5: sw_x2000_graphics_7;
+}
+
+/* Assemble a 7-car articulated vehicle. */
 switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part, extra_callback_info1) {
-	1 .. 5: return item_x2000;
+	1 .. 7: return item_x2000;
 	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
 }
 
@@ -199,13 +230,106 @@ switch (FEAT_TRAINS, SELF, sw_x2000_visual_effect_and_powered, ((position_in_art
 
 /* Create livery refits with cargo_subtypes */
 switch (FEAT_TRAINS, SELF, sw_x2000_cargo_subtype_text, cargo_subtype) {
-	0: return string(STR_LIVERY_WHITE_BLUE);
-	1: return string(STR_LIVERY_GREY);
+	0: return string(STR_LIVERY_WHITE_BLUE_5);
+	1: return string(STR_LIVERY_GREY_5);
+	2: return string(STR_LIVERY_WHITE_BLUE_6);
+	3: return string(STR_LIVERY_GREY_6);
+	4: return string(STR_LIVERY_WHITE_BLUE_7);
+	5: return string(STR_LIVERY_GREY_7);
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_shorten_5, cargo_subtype) {
+	0..1: return 6;
+	return 8;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_shorten_6, cargo_subtype) {
+	0..1: return 1;
+	2..3: return 7;
+	return 8;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_shorten_7, cargo_subtype) {
+	0..3: return 1;
+	return 8;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_shorten, position_in_articulated_veh) {
+	0..4: return 8;
+	5: sw_x2000_shorten_5;
+	6: sw_x2000_shorten_6;
+	7: sw_x2000_shorten_7;
 }
 
 switch (FEAT_TRAINS, SELF, sw_x2000_cargo_subtype, param_livery_selection) {
-	0: return CB_RESULT_NO_TEXT;
 	return sw_x2000_cargo_subtype_text;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_decay_5, position_in_articulated_veh) {
+	1: return 350;
+	return 250;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_decay_6, position_in_articulated_veh) {
+	1..2: return 350;
+	return 250;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_decay, cargo_subtype) {
+	0..1: sw_x2000_cargo_decay_5;
+	sw_x2000_cargo_decay_6;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity_5, position_in_articulated_veh) {
+	1: return 48;
+	2: return 72;
+	3: return 28;
+	4: return 72;
+	5: return 43;
+	return 0;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity_6, position_in_articulated_veh) {
+	1..2: return 48;
+	3: return 72;
+	4: return 28;
+	5: return 72;
+	6: return 43;
+	return 0;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity_7, position_in_articulated_veh) {
+	1..2: return 48;
+	3: return 72;
+	4: return 28;
+	5..6: return 72;
+	7: return 43;
+	return 0;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity, cargo_subtype) {
+	0..1: sw_x2000_capacity_5;
+	2..3: sw_x2000_capacity_6;
+	4..5: sw_x2000_capacity_7;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_weight, cargo_subtype) {
+	0..1: return 318;
+	2..3: return 365;
+	4..5: return 412;
+}
+
+// Increasing TE to 200 KN (160 in reality) to avoid "int" error and 2 km/h climbing
+switch (FEAT_TRAINS, SELF, sw_x2000_tecoef, cargo_subtype) {
+	0..1: return 16;
+	2..3: return 14;
+	4..5: return 12;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_running_cost, cargo_subtype) {
+	0..1: func_running_costs(6283);
+	2..3: func_running_costs(6856);
+	4..5: func_running_costs(7393);
 }
 
 item(FEAT_TRAINS, item_x2000, 3) {
@@ -220,7 +344,7 @@ item(FEAT_TRAINS, item_x2000, 3) {
 		refit_cost: 0;
 		default_cargo_type: PASS;
 		cargo_capacity: 44;
-		loading_speed: 5;
+		loading_speed: 8;
 		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
 		sprite_id: SPRITE_ID_NEW_TRAIN; // required to enable new graphics
 		speed: 210 km/h;
@@ -241,8 +365,13 @@ item(FEAT_TRAINS, item_x2000, 3) {
 		colour_mapping: sw_cc_blue_white;
 		cargo_subtype_text: sw_x2000_cargo_subtype;
 		cost_factor: 257;
-		running_cost_factor: func_running_costs(6283);
+		running_cost_factor: sw_x2000_running_cost;
 		purchase_running_cost_factor: 6283;
+		length: sw_x2000_shorten;
+		weight: sw_x2000_weight;
+		cargo_capacity: sw_x2000_capacity;
+		tractive_effort_coefficient: sw_x2000_tecoef;
+		cargo_age_period: sw_x2000_cargo_decay;
 		visual_effect_and_powered: sw_x2000_visual_effect_and_powered;
 		additional_text: string(STR_ROLE_EXPRESS_PASS);
 	}

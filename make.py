@@ -15,7 +15,7 @@ unordered_stuff = ["mz_iv", "mf", "er", "x2000", "ma", "et", "mf_ic2", "mz_ii", 
 copy_bool = True
 
 # What is the path of your OpenTTD folder?
-openttd_path = "C:/Users/tyler/Documents/OpenTTD/newgrf"
+openttd_path = "F:/GRF/danish_trains"
 
 #################################
 # NO NEED TO CHANGE STUFF BELOW #
