@@ -46,4 +46,6 @@ STR_NAME_STOG_2						:S-Train 2 (Electric)
 STR_NAME_STOG_3						:S-Train 3 (Electric)
 STR_NAME_STOG_4						:S-Train 4 (Electric)
 
-STR_NAME_X2000						:SJ X2 (Electric)
+STR_NAME_X2000_5					:SJ X2 (5 Parts) (Electric)
+STR_NAME_X2000_6					:SJ X2 (6 Parts) (Electric)
+STR_NAME_X2000_7					:SJ X2 (7 Parts) (Electric)

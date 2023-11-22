@@ -46,42 +46,42 @@ switch (FEAT_TRAINS, SELF, sw_x2000_livery_type, param_livery_selection) {
 
 /* Select the right livery for each sprite */
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_loco;
 	return spriteset_x2000_2_loco;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_loco_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_loco_reversed;
 	return spriteset_x2000_2_loco_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_coach;
 	return spriteset_x2000_2_coach;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_coach_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_coach_reversed;
 	return spriteset_x2000_2_coach_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cafe;
 	return spriteset_x2000_2_cafe;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cafe_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cafe_reversed;
 	return spriteset_x2000_2_cafe_reversed;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cab;
 	return spriteset_x2000_2_cab;
 }
 
-switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, sw_x2000_livery_type()) {
+switch (FEAT_TRAINS, SELF, sw_x2000_livery_cab_reversed, sw_x2000_livery_type() % 2) {
 	0: return spriteset_x2000_1_cab_reversed;
 	return spriteset_x2000_2_cab_reversed;
 }
@@ -177,20 +177,58 @@ switch (FEAT_TRAINS, PARENT, sw_x2000_reverser_5, vehicle_is_reversed) {
 }
 
 /* Select the correct part of the train */
-switch (FEAT_TRAINS, SELF, sw_x2000_graphics, position_in_articulated_veh) {
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics_5, position_in_articulated_veh) {
 	0: sw_x2000_reverser_0; // Car 0 (first)
 	1: sw_x2000_reverser_1_4; // Car 1
 	2: sw_x2000_reverser_2;
 	3: sw_x2000_reverser_3; // Cafe
 	4: sw_x2000_reverser_1_4;
 	5: sw_x2000_reverser_5;
+	empty_sprites;
 }
 
-/* Assemble a 4-car articulated vehicle. */
-switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part, extra_callback_info1) {
+/* 6-car X2 */
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics_6, position_in_articulated_veh) {
+	0: sw_x2000_reverser_0; // Car 0 (first)
+	1: sw_x2000_reverser_1_4; // Car 1
+	2: sw_x2000_reverser_2;
+	3: sw_x2000_reverser_1_4;
+	4: sw_x2000_reverser_3;
+	5: sw_x2000_reverser_1_4;
+	6: sw_x2000_reverser_5;
+	empty_sprites;
+}
+
+/* 7-car X2 */
+switch (FEAT_TRAINS, SELF, sw_x2000_graphics_7, position_in_articulated_veh) {
+	0: sw_x2000_reverser_0; // Car 0 (first)
+	1: sw_x2000_reverser_1_4; // Car 1
+	2: sw_x2000_reverser_1_4;
+	3: sw_x2000_reverser_2;
+	4: sw_x2000_reverser_3;
+	5: sw_x2000_reverser_1_4;
+	6: sw_x2000_reverser_1_4;
+	7: sw_x2000_reverser_5;
+}
+
+/* Assemble a 5-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part_5, extra_callback_info1) {
 	1 .. 5: return item_x2000;
 	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
 }
+
+/* Assemble a 6-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part_6, extra_callback_info1) {
+	1 .. 6: return item_x2000_6;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+/* Assemble a 7-car articulated vehicle. */
+switch (FEAT_TRAINS, SELF, sw_x2000_articulated_part_7, extra_callback_info1) {
+	1 .. 7: return item_x2000_7;
+	return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
 
 switch (FEAT_TRAINS, SELF, sw_x2000_visual_effect_and_powered, ((position_in_articulated_veh == 0) && !func_is_reversed()) || ((position_in_articulated_veh_from_end == 0) && func_is_reversed()) ) {
 	1: return visual_effect_and_powered(VISUAL_EFFECT_ELECTRIC, 0, ENABLE_WAGON_POWER);
@@ -208,19 +246,57 @@ switch (FEAT_TRAINS, SELF, sw_x2000_cargo_subtype, param_livery_selection) {
 	return sw_x2000_cargo_subtype_text;
 }
 
+/* First and second classes have different comforts and capacities */
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_decay_5, position_in_articulated_veh) {
+	1: return 350;
+	return 250;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_cargo_decay_6_7, position_in_articulated_veh) {
+	1..2: return 350;
+	return 250;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity_5, position_in_articulated_veh) {
+	1: return 48;
+	2: return 72;
+	3: return 28;
+	4: return 72;
+	5: return 43;
+	return 0;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity_6, position_in_articulated_veh) {
+	1..2: return 48;
+	3: return 72;
+	4: return 28;
+	5: return 72;
+	6: return 43;
+	return 0;
+}
+
+switch (FEAT_TRAINS, SELF, sw_x2000_capacity_7, position_in_articulated_veh) {
+	1..2: return 48;
+	3: return 72;
+	4: return 28;
+	5..6: return 72;
+	7: return 43;
+	return 0;
+}
+
 item(FEAT_TRAINS, item_x2000, 3) {
 	property {
-		name: string(STR_NAME_X2000);
+		name: string(STR_NAME_X2000_5);
 		climates_available: ALL_CLIMATES;
 		introduction_date: date(1990,09,04);
-		model_life: 40;
+		model_life: VEHICLE_NEVER_EXPIRES;
 		vehicle_life: 40;
 		reliability_decay: 20;
 		refittable_cargo_classes: bitmask(CC_PASSENGERS);
 		refit_cost: 0;
 		default_cargo_type: PASS;
 		cargo_capacity: 44;
-		loading_speed: 5;
+		loading_speed: 8;
 		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
 		sprite_id: SPRITE_ID_NEW_TRAIN; // required to enable new graphics
 		speed: 210 km/h;
@@ -235,14 +311,111 @@ item(FEAT_TRAINS, item_x2000, 3) {
 		length: 8;
 	}
 	graphics {
-		default: sw_x2000_graphics;
+		default: sw_x2000_graphics_5;
 		purchase: sw_x2000_livery_loco;
-		articulated_part: sw_x2000_articulated_part;
+		articulated_part: sw_x2000_articulated_part_5;
 		colour_mapping: sw_cc_blue_white;
 		cargo_subtype_text: sw_x2000_cargo_subtype;
 		cost_factor: 257;
 		running_cost_factor: func_running_costs(6283);
 		purchase_running_cost_factor: 6283;
+		weight: 318;
+		cargo_capacity: sw_x2000_capacity_5;
+		purchase_cargo_capacity: 263/6;
+		tractive_effort_coefficient: 16;
+		cargo_age_period: sw_x2000_cargo_decay_5;
+		visual_effect_and_powered: sw_x2000_visual_effect_and_powered;
+		additional_text: string(STR_ROLE_EXPRESS_PASS);
+	}
+}
+
+item(FEAT_TRAINS, item_x2000_6, 17) {
+	property {
+		name: string(STR_NAME_X2000_6);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1990,09,04);
+		model_life: VEHICLE_NEVER_EXPIRES;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		refit_cost: 0;
+		default_cargo_type: PASS;
+		cargo_capacity: 44;
+		loading_speed: 8;
+		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
+		sprite_id: SPRITE_ID_NEW_TRAIN; // required to enable new graphics
+		speed: 210 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_TILT, TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+		track_type: ELRL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_ELECTRIC;
+		power: 3260 kW;
+		weight: 323 tons;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+		variant_group: 3;
+	}
+	graphics {
+		default: sw_x2000_graphics_6;
+		purchase: sw_x2000_livery_loco;
+		articulated_part: sw_x2000_articulated_part_6;
+		colour_mapping: sw_cc_blue_white;
+		cargo_subtype_text: sw_x2000_cargo_subtype;
+		cost_factor: 257;
+		running_cost_factor: func_running_costs(6856);
+		purchase_running_cost_factor: 6856;
+		weight: 365;
+		cargo_capacity: sw_x2000_capacity_6;
+		purchase_cargo_capacity: 311/7;
+		tractive_effort_coefficient: 14;
+		cargo_age_period: sw_x2000_cargo_decay_6_7;
+		visual_effect_and_powered: sw_x2000_visual_effect_and_powered;
+		additional_text: string(STR_ROLE_EXPRESS_PASS);
+	}
+}
+
+item(FEAT_TRAINS, item_x2000_7, 18) {
+	property {
+		name: string(STR_NAME_X2000_7);
+		climates_available: ALL_CLIMATES;
+		introduction_date: date(1990,09,04);
+		model_life: VEHICLE_NEVER_EXPIRES;
+		vehicle_life: 40;
+		reliability_decay: 20;
+		refittable_cargo_classes: bitmask(CC_PASSENGERS);
+		refit_cost: 0;
+		default_cargo_type: PASS;
+		cargo_capacity: 44;
+		loading_speed: 8;
+		cargo_age_period: 278; // 1.5 times normal for this expensive long-distance train
+		sprite_id: SPRITE_ID_NEW_TRAIN; // required to enable new graphics
+		speed: 210 km/h;
+		misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_MU, TRAIN_FLAG_TILT, TRAIN_FLAG_AUTOREFIT, TRAIN_FLAG_SPRITE_STACK);
+		track_type: ELRL;
+		ai_special_flag: AI_FLAG_PASSENGER;
+		running_cost_base: RUNNING_COST_STEAM;
+		engine_class: ENGINE_CLASS_ELECTRIC;
+		power: 3260 kW;
+		weight: 323 tons;
+		tractive_effort_coefficient: 0.3;
+		length: 8;
+		variant_group: 3;
+	}
+	graphics {
+		default: sw_x2000_graphics_7;
+		purchase: sw_x2000_livery_loco;
+		articulated_part: sw_x2000_articulated_part_7;
+		colour_mapping: sw_cc_blue_white;
+		cargo_subtype_text: sw_x2000_cargo_subtype;
+		cost_factor: 257;
+		running_cost_factor: func_running_costs(7393);
+		purchase_running_cost_factor: 7393;
+		weight: 412;
+		cargo_capacity: sw_x2000_capacity_7;
+		purchase_cargo_capacity: 383/8;
+		tractive_effort_coefficient: 13;
+		cargo_age_period: sw_x2000_cargo_decay_6_7;
 		visual_effect_and_powered: sw_x2000_visual_effect_and_powered;
 		additional_text: string(STR_ROLE_EXPRESS_PASS);
 	}

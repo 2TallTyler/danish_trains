@@ -5,6 +5,7 @@
 Trains from Denmark, focusing on the Danish State Railways, DSB.
 
 Contributors:
+* JohnFranklin523 (X2000 length variants)
 * kris545545 (4th gen S-Train livery)
 
 ## Complete
