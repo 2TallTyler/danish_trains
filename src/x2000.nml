@@ -183,8 +183,7 @@ switch (FEAT_TRAINS, SELF, sw_x2000_graphics_5, position_in_articulated_veh) {
 	2: sw_x2000_reverser_2;
 	3: sw_x2000_reverser_3; // Cafe
 	4: sw_x2000_reverser_1_4;
-	5: sw_x2000_reverser_5;
-	empty_sprites;
+	sw_x2000_reverser_5;
 }
 
 /* 6-car X2 */
@@ -195,8 +194,7 @@ switch (FEAT_TRAINS, SELF, sw_x2000_graphics_6, position_in_articulated_veh) {
 	3: sw_x2000_reverser_1_4;
 	4: sw_x2000_reverser_3;
 	5: sw_x2000_reverser_1_4;
-	6: sw_x2000_reverser_5;
-	empty_sprites;
+	sw_x2000_reverser_5;
 }
 
 /* 7-car X2 */
@@ -208,7 +206,7 @@ switch (FEAT_TRAINS, SELF, sw_x2000_graphics_7, position_in_articulated_veh) {
 	4: sw_x2000_reverser_3;
 	5: sw_x2000_reverser_1_4;
 	6: sw_x2000_reverser_1_4;
-	7: sw_x2000_reverser_5;
+	sw_x2000_reverser_5;
 }
 
 /* Assemble a 5-car articulated vehicle. */

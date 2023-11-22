@@ -95,10 +95,6 @@ template template_4_reversed(x, y) {
     [ x+62,		y,		14,		19,		-5,			-13] //x
 }
 
-spriteset (empty_sprites) {
-    [0, 0, 2, 2, 0, 0, "src/gfx/empty.png"]
-}
-
 /* End Sprite Templates */
 
 // -24, 12
